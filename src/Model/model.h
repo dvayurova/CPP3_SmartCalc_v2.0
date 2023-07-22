@@ -10,6 +10,24 @@
 namespace s21 {
 enum Priority { DEFAULT, LOW, MEDIUM, HIGH };
 
+class Lexeme {
+
+public:
+  Lexeme() {}
+  Lexeme(double number)
+      : is_number_(true), number_(number), operation_(""), priority_(DEFAULT){};
+  Lexeme(std::string operation)
+      : is_number_(false), number_(0), operation_(operation),
+        priority_(MEDIUM){};
+  Lexeme(std::string operation, Priority priority)
+      : is_number_(false), number_(0), operation_(operation),
+        priority_(priority){};
+  bool is_number_;
+  double number_;
+  std::string operation_;
+  Priority priority_;
+};
+
 class Model {
 
 public:
@@ -19,23 +37,13 @@ public:
   void InfixToPostfix();
   void CalculatePostfix();
   double GetNumber(size_t &index);
+  std::string GetFunction(size_t &index);
+  void GetOperation(size_t &index, std::queue<Lexeme> &output);
+  void PushOperator(size_t &index, std::queue<Lexeme> &output);
 
 private:
   std::string expression_;
   double result_;
-};
-
-class Lexeme {
-
-public:
-  Lexeme();
-  Lexeme(double number, Priority priority)
-      : is_number_(true), number_(number), operation_(""),
-        priority_(priority){};
-  bool is_number_;
-  double number_;
-  std::string operation_;
-  Priority priority_;
 };
 
 } // namespace s21
