@@ -10,7 +10,7 @@
 #include <string>
 
 namespace s21 {
-enum Priority { DEFAULT, LOW, MEDIUM, HIGH, UNARY };
+enum Priority { DEFAULT, LOW, MEDIUM, HIGH };
 
 class Lexeme {
 public:
@@ -30,16 +30,18 @@ public:
   void Print();
   double Calculation(char operation, double first, double second);
   double GetCalcResult();
+  void Validation();
 
 private:
   std::string infix_;
   std::queue<Lexeme> postfix_;
-  std::map<char, Priority> operation_priority = {
-      {'(', DEFAULT}, {'+', LOW},  {'-', LOW},  {'*', MEDIUM},
-      {'/', MEDIUM},  {'^', HIGH}, {'~', UNARY} // Унарный минус
-  };
+  std::map<char, Priority> operation_priority = {{'(', DEFAULT}, {'+', LOW},
+                                                 {'-', LOW},     {'*', MEDIUM},
+                                                 {'/', MEDIUM},  {'^', HIGH}};
 
   double GetNumber(size_t &index);
+  void FromStackToPostfix(std::queue<Lexeme> &postfix,
+                          std::stack<Lexeme> &stack);
 };
 
 } // namespace s21

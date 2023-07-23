@@ -3,7 +3,19 @@
 namespace s21 {
 RPN::RPN(std::string expression) {
   infix_ = expression;
+  Validation();
   postfix_ = InfixToPostfix();
+}
+
+void RPN::Validation() {
+  std::transform(infix_.begin(), infix_.end(), infix_.begin(), ::tolower);
+  infix_.erase(remove(infix_.begin(), infix_.end(), ' '), infix_.end());
+  for (size_t i = 0; i < infix_.length(); i++) {
+    if (infix_[i] == '-' && (i == 0 || infix_[i - 1] == '(')) {
+      infix_.insert(i, 1, '0'); // добавляю 0 перед унарным минусом
+    }
+  }
+  // std::cout << "\n infix_ string after validation: " << infix_ << " ";
 }
 
 double RPN::GetNumber(size_t &index) {
@@ -25,32 +37,27 @@ std::queue<Lexeme> RPN::InfixToPostfix() {
       stack.push(Lexeme(infix_[i]));
     } else if (infix_[i] == ')') {
       while (!stack.empty() && stack.top().operation_ != '(') {
-        postfix.push(stack.top());
-        stack.pop();
+        FromStackToPostfix(postfix, stack);
       }
       stack.pop();
     } else if (operation_priority.find(infix_[i]) != operation_priority.end()) {
-      char oper = infix_[i];
-      // Унарный минус
-      if (oper == '-' &&
-          (i == 0 || (i > 1 && operation_priority.find(infix_[i - 1]) !=
-                                   operation_priority.end())))
-        // Пока  записываем его как тильду
-        oper = '~';
-
       while (!stack.empty() && (operation_priority[stack.top().operation_] >=
-                                operation_priority[oper])) {
-        postfix.push(stack.top());
-        stack.pop();
+                                operation_priority[infix_[i]])) {
+        FromStackToPostfix(postfix, stack);
       }
-      stack.push(Lexeme(oper));
+      stack.push(Lexeme(infix_[i]));
     }
   }
   while (!stack.empty()) {
-    postfix.push(stack.top());
-    stack.pop();
+    FromStackToPostfix(postfix, stack);
   }
   return postfix;
+}
+
+void RPN::FromStackToPostfix(std::queue<Lexeme> &postfix,
+                             std::stack<Lexeme> &stack) {
+  postfix.push(stack.top());
+  stack.pop();
 }
 
 void RPN::Print() {
@@ -80,6 +87,7 @@ double RPN::Calculation(char operation, double first, double second) {
 }
 
 double RPN::GetCalcResult() {
+  double result = 0;
   std::stack<double> stack;
   while (!postfix_.empty()) {
     if (postfix_.front().is_number_) {
@@ -93,7 +101,8 @@ double RPN::GetCalcResult() {
     }
     postfix_.pop();
   }
-  return stack.top();
+  result = stack.top();
+  return result;
 }
 
 } // namespace s21
