@@ -2,7 +2,7 @@
 #define SRC_MODEL_MODEL_H_
 
 #include <cmath>
-#include <iostream> // delete
+#include <iostream>  // delete
 #include <map>
 #include <queue>
 #include <regex>
@@ -13,7 +13,7 @@ namespace s21 {
 enum Priority { DEFAULT, LOW, MEDIUM, HIGH };
 
 class Lexeme {
-public:
+ public:
   Lexeme() {}
   Lexeme(double number) : is_number_(true), number_(number), operation_(0){};
   Lexeme(char operation)
@@ -24,15 +24,13 @@ public:
 };
 
 class RPN {
-public:
+ public:
   RPN(std::string expression);
-  std::queue<Lexeme> InfixToPostfix();
-  void Print();
-  double Calculation(char operation, double first, double second);
-  double GetCalcResult();
-  void Validation();
+  double GetCalculationResult();
 
-private:
+  void Print();  // tmp
+
+ private:
   std::string infix_;
   std::queue<Lexeme> postfix_;
   std::map<char, Priority> operation_priority = {{'(', DEFAULT}, {'+', LOW},
@@ -42,9 +40,12 @@ private:
   double GetNumber(size_t &index);
   void FromStackToPostfix(std::queue<Lexeme> &postfix,
                           std::stack<Lexeme> &stack);
+  void ValidateInfix();
+  std::queue<Lexeme> InfixToPostfix();
+  double Calculate(char operation, double first, double second);
 };
 
-} // namespace s21
+}  // namespace s21
 
 #include "model.cc"
-#endif //  SRC_MODEL_MODEL_H_
+#endif  //  SRC_MODEL_MODEL_H_

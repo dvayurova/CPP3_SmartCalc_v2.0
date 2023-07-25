@@ -7,6 +7,6 @@ int main() {
   //                "(7-(1+1))*3-(2+(1+1))+15/(7-(1+1))*3-(2+(1+1)))");
   s21::RPN model("-2^2^2^(-4/5) ");
   // model.Print();
-  std::cout << "\n res = " << model.GetCalcResult();
+  std::cout << "\n res = " << model.GetCalculationResult();
   return 0;
 }
