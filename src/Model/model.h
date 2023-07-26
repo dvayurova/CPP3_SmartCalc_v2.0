@@ -44,10 +44,9 @@ private:
 
   double GetNumber(size_t &index);
   std::string GetFunction(size_t &index);
-  void FromStackToPostfix(std::queue<Lexeme> &postfix,
-                          std::stack<Lexeme> &stack);
+  void FromStackToPostfix(std::stack<Lexeme> &stack);
   void ValidateInfix();
-  std::queue<Lexeme> InfixToPostfix();
+  void InfixToPostfix();
   double CalculateArithmetic(std::string operation, double first,
                              double second);
   double GetArithmeticResult(std::stack<double> &stack);

@@ -5,7 +5,7 @@ RPN::RPN(std::string expression) {
   infix_ = expression;
   valid_expression_ = true;
   ValidateInfix();
-  postfix_ = InfixToPostfix();
+  InfixToPostfix();
 }
 
 void RPN::ValidateInfix() {
@@ -37,20 +37,19 @@ std::string RPN::GetFunction(size_t &index) {
   return *next;
 }
 
-std::queue<Lexeme> RPN::InfixToPostfix() {
-  std::queue<Lexeme> postfix;
+void RPN::InfixToPostfix() {
   std::stack<Lexeme> stack;
 
   for (size_t i = 0; i < infix_.length() && valid_expression_; i++) {
     std::string operation{};
     if (std::isdigit(infix_[i])) {
-      postfix.push(Lexeme(GetNumber(i)));
+      postfix_.push(Lexeme(GetNumber(i)));
     } else if (infix_[i] == '(') {
       operation.push_back(infix_[i]);
       stack.push(Lexeme(operation));
     } else if (infix_[i] == ')') {
       while (!stack.empty() && stack.top().operation_ != "(") {
-        FromStackToPostfix(postfix, stack);
+        FromStackToPostfix(stack);
       }
       if (!stack.empty() && stack.top().operation_ == "(") {
         stack.pop();
@@ -67,7 +66,7 @@ std::queue<Lexeme> RPN::InfixToPostfix() {
       if (operation_priority.find(operation) != operation_priority.end()) {
         while (!stack.empty() && (operation_priority[stack.top().operation_] >=
                                   operation_priority[operation])) {
-          FromStackToPostfix(postfix, stack);
+          FromStackToPostfix(stack);
         }
         stack.push(Lexeme(operation));
       } else {
@@ -79,14 +78,12 @@ std::queue<Lexeme> RPN::InfixToPostfix() {
   while (!stack.empty()) {
     if (stack.top().operation_ == "(")
       valid_expression_ = false;
-    FromStackToPostfix(postfix, stack);
+    FromStackToPostfix(stack);
   }
-  return postfix;
 }
 
-void RPN::FromStackToPostfix(std::queue<Lexeme> &postfix,
-                             std::stack<Lexeme> &stack) {
-  postfix.push(stack.top());
+void RPN::FromStackToPostfix(std::stack<Lexeme> &stack) {
+  postfix_.push(stack.top());
   stack.pop();
 }
 
