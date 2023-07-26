@@ -27,26 +27,43 @@ double RPN::GetNumber(size_t &index) {
   return std::stod(*next);
 }
 
+std::string RPN::GetFunction(size_t &index) {
+  std::regex function_regex("([a-z]+)");
+  std::regex_token_iterator<std::string::iterator> next(
+      infix_.begin() + index, infix_.end(), function_regex);
+  index += next->length() - 1;
+  return *next;
+}
+
 std::queue<Lexeme> RPN::InfixToPostfix() {
   std::queue<Lexeme> postfix;
   std::stack<Lexeme> stack;
 
   for (size_t i = 0; i < infix_.length(); i++) {
+    std::string operation{};
     if (std::isdigit(infix_[i])) {
       postfix.push(Lexeme(GetNumber(i)));
     } else if (infix_[i] == '(') {
-      stack.push(Lexeme(infix_[i]));
+      operation.push_back(infix_[i]);
+      stack.push(Lexeme(operation));
     } else if (infix_[i] == ')') {
-      while (!stack.empty() && stack.top().operation_ != '(') {
+      while (!stack.empty() && stack.top().operation_ != "(") {
         FromStackToPostfix(postfix, stack);
       }
       stack.pop();
-    } else if (operation_priority.find(infix_[i]) != operation_priority.end()) {
-      while (!stack.empty() && (operation_priority[stack.top().operation_] >=
-                                operation_priority[infix_[i]])) {
-        FromStackToPostfix(postfix, stack);
+    } else {
+      if (std::isalpha(infix_[i])) {
+        operation = GetFunction(i);
+      } else {
+        operation.push_back(infix_[i]);
       }
-      stack.push(Lexeme(infix_[i]));
+      if (operation_priority.find(operation) != operation_priority.end()) {
+        while (!stack.empty() && (operation_priority[stack.top().operation_] >=
+                                  operation_priority[operation])) {
+          FromStackToPostfix(postfix, stack);
+        }
+        stack.push(Lexeme(operation));
+      }
     }
   }
   while (!stack.empty()) {
@@ -71,20 +88,63 @@ void RPN::Print() {
   }
 }
 
-double RPN::Calculate(char operation, double first, double second) {
-  switch (operation) {
-  case '+':
+double RPN::Calculate(std::string operation, double first, double second) {
+  if (operation == "+")
     return first + second;
-  case '-':
+  else if (operation == "-")
     return first - second;
-  case '*':
+  else if (operation == "*")
     return first * second;
-  case '/':
+  else if (operation == "/")
     return first / second;
-  case '^':
+  else if (operation == "^")
     return std::pow(first, second);
-  }
+  else if (operation == "mod")
+    return std::fmod(first, second);
   return 0;
+}
+
+bool RPN::NeedTwoArguments(std::string &operation) {
+  if (operation_priority[operation] == FUNCTION) {
+    return false;
+  }
+  return true;
+}
+
+double RPN::GetArithmeticResult(std::stack<double> &stack) {
+  double result = 0;
+  double second = stack.top();
+  stack.pop();
+  double first = stack.top();
+  stack.pop();
+  result = Calculate(postfix_.front().operation_, first, second);
+  return result;
+}
+
+double RPN::GetFunctionResult(std::stack<double> &stack) {
+  double result = 0;
+  double number = stack.top();
+  stack.pop();
+  if (postfix_.front().operation_ == "cos") {
+    result = std::cos(number);
+  } else if (postfix_.front().operation_ == "sin") {
+    result = std::sin(number);
+  } else if (postfix_.front().operation_ == "tan") {
+    result = std::tan(number);
+  } else if (postfix_.front().operation_ == "acos") {
+    result = std::acos(number);
+  } else if (postfix_.front().operation_ == "asin") {
+    result = std::asin(number);
+  } else if (postfix_.front().operation_ == "atan") {
+    result = std::atan(number);
+  } else if (postfix_.front().operation_ == "sqrt") {
+    result = std::sqrt(number);
+  } else if (postfix_.front().operation_ == "ln") {
+    result = std::log(number);
+  } else if (postfix_.front().operation_ == "log") {
+    result = std::log10(number);
+  }
+  return result;
 }
 
 double RPN::GetCalculationResult() {
@@ -94,11 +154,11 @@ double RPN::GetCalculationResult() {
     if (postfix_.front().is_number_) {
       stack.push(postfix_.front().number_);
     } else {
-      double second = stack.top();
-      stack.pop();
-      double first = stack.top();
-      stack.pop();
-      stack.push(Calculate(postfix_.front().operation_, first, second));
+      if (NeedTwoArguments(postfix_.front().operation_)) {
+        stack.push(GetArithmeticResult(stack));
+      } else {
+        stack.push(GetFunctionResult(stack));
+      }
     }
     postfix_.pop();
   }

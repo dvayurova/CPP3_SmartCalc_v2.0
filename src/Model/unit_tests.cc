@@ -78,125 +78,124 @@ TEST(ModelTest, Case12) {
   ASSERT_DOUBLE_EQ(10648, model.GetCalculationResult());
 }
 
-// TEST(ModelTest, Case13) {
-//   std::string expression = "10 mod 3";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(1, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case13) {
+  std::string expression = "10 mod 3";
+  s21::RPN model(expression);
+  ASSERT_DOUBLE_EQ(1, model.GetCalculationResult());
+}
 
-// TEST(ModelTest, Case14) {
-//   std::string expression = "cos(30)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(0.154251449888, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case14) {
+  std::string expression = "cos(30)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(0.154251449888, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case15) {
-//   std::string expression = "sin(45)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(0.850903524534, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case15) {
+  std::string expression = "sin(45)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(0.850903524534, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case16) {
-//   std::string expression = "tan(90)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(-1.995200412208, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case16) {
+  std::string expression = "tan(90)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(-1.995200412208, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case17) {
-//   std::string expression = "acos(-0.3)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(1.8754889, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case17) {
+  std::string expression = "acos(-0.3)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(1.8754889, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case18) {
-//   std::string expression = "asin(0.5)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(0.5235988, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case18) {
+  std::string expression = "asin(0.5)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(0.5235988, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case19) {
-//   std::string expression = "atan(1)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(0.7853981, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case19) {
+  std::string expression = "atan(1)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(0.7853981, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case20) {
-//   std::string expression = "sqrt(9)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(3, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case20) {
+  std::string expression = "sqrt(9)";
+  s21::RPN model(expression);
+  ASSERT_DOUBLE_EQ(3, model.GetCalculationResult());
+}
 
-// TEST(ModelTest, Case21) {
-//   std::string expression = "ln(99)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(4.5951198, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case21) {
+  std::string expression = "ln(99)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(4.5951198, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case22) {
-//   std::string expression = "log(100)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(2, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case22) {
+  std::string expression = "log(100)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(2, model.GetCalculationResult(), 1e-6);
+}
 
 TEST(ModelTest, Case23) {
   std::string expression =
       "(-0.5 - 0.375) / 1/8 - (-9.125 * (-0.21)) + (345000125 - 315752568) / "
       "(-458.3258)";
   s21::RPN model(expression);
-  ASSERT_DOUBLE_EQ(-63815.9261298373886, model.GetCalculationResult());
+  ASSERT_NEAR(-63815.9261298373886, model.GetCalculationResult(), 1e-6);
 }
 
 TEST(ModelTest, Case24) {
   std::string expression =
       "(17*1/5*0.125-(2*32/45-1/7/60))*(11/40/4*7/12+2.64)";
   s21::RPN model(expression);
-  ASSERT_DOUBLE_EQ(-2.666278232473545, model.GetCalculationResult());
+  ASSERT_NEAR(-2.666278232473545, model.GetCalculationResult(), 1e-6);
 }
 
-// TEST(ModelTest, Case25) {
-//   std::string expression = "log(2) + (-1/2) * log(8) - ln(4 * sqrt(8))";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(-2.57653012979, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case25) {
+  std::string expression = "log(2) + (-1/2) * log(8) - ln(4 * sqrt(8))";
+  s21::RPN model(expression);
+  ASSERT_NEAR(-2.57653012979, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case26) {
-//   std::string expression =
-//       "(cos(70)+cos(50))*(cos(310)+cos(290))-(sin(-40)+sin(-60))";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(0.49956901475, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case26) {
+  std::string expression =
+      "(cos(70)+cos(50))*(cos(310)+cos(290))-(sin(-40)+sin(-60))";
+  s21::RPN model(expression);
+  ASSERT_NEAR(0.49956901475, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case27) {
-//   std::string expression = "sin(cos(ln(sqrt(4))))";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(0.69558863622, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case27) {
+  std::string expression = "sin(cos(ln(sqrt(4))))";
+  s21::RPN model(expression);
+  ASSERT_NEAR(0.69558863622, model.GetCalculationResult(), 1e-6);
+}
 
 TEST(ModelTest, Case28) {
   std::string expression = "-1.0/(-3.0)";
   s21::RPN model(expression);
-  ASSERT_DOUBLE_EQ(0.3333333333333333, model.GetCalculationResult());
+  ASSERT_NEAR(0.3333333333333333, model.GetCalculationResult(), 1e-6);
 }
 
-// TEST(ModelTest, Case29) {
-//   std::string expression =
-//       "tan(-85)*tan(15)+asin(0.8)-acos(1)/"
-//       "atan(0.5)+acos(-0.3)+asin(-0.7)*atan(-0.5)";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(3.31540708, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case29) {
+  std::string expression = "tan(-85)*tan(15)+asin(0.8)-acos(1)/"
+                           "atan(0.5)+acos(-0.3)+asin(-0.7)*atan(-0.5)";
+  s21::RPN model(expression);
+  ASSERT_NEAR(3.31540708, model.GetCalculationResult(), 1e-6);
+}
 
-// TEST(ModelTest, Case30) {
-//   std::string expression = "(2^8 + 2^(-5))*(sqrt(144)/(-2))";
-//   s21::RPN model(expression);
-//   ASSERT_DOUBLE_EQ(-1536.1875, model.GetCalculationResult());
-// }
+TEST(ModelTest, Case30) {
+  std::string expression = "(2^8 + 2^(-5))*(sqrt(144)/(-2))";
+  s21::RPN model(expression);
+  ASSERT_NEAR(-1536.1875, model.GetCalculationResult(), 1e-6);
+}
 
 TEST(ModelTest, Case31) {
   std::string expression =
       "((4.625-13/18*9/26) / 2*0.25 +2*0.5 / 1.25 / 6*3/4) / 53/68";
   s21::RPN model(expression);
-  ASSERT_DOUBLE_EQ(0.00017948806, model.GetCalculationResult());
+  ASSERT_NEAR(0.00017948806, model.GetCalculationResult(), 1e-6);
 }
 
 // TEST(ModelTest, Case32) {
