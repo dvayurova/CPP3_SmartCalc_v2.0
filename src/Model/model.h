@@ -26,13 +26,14 @@ public:
 class RPN {
 public:
   RPN(std::string expression);
-  double GetCalculationResult();
+  std::pair<bool, double> GetCalculationResult();
 
   void Print(); // tmp
 
 private:
   std::string infix_;
   std::queue<Lexeme> postfix_;
+  bool valid_expression_;
   std::map<std::string, Priority> operation_priority = {
       {"(", DEFAULT},     {"+", LOW},         {"-", LOW},
       {"*", MEDIUM},      {"/", MEDIUM},      {"^", HIGH},
@@ -47,7 +48,8 @@ private:
                           std::stack<Lexeme> &stack);
   void ValidateInfix();
   std::queue<Lexeme> InfixToPostfix();
-  double Calculate(std::string operation, double first, double second);
+  double CalculateArithmetic(std::string operation, double first,
+                             double second);
   double GetArithmeticResult(std::stack<double> &stack);
   double GetFunctionResult(std::stack<double> &stack);
   bool NeedTwoArguments(std::string &operation);

@@ -3,6 +3,7 @@
 namespace s21 {
 RPN::RPN(std::string expression) {
   infix_ = expression;
+  valid_expression_ = true;
   ValidateInfix();
   postfix_ = InfixToPostfix();
 }
@@ -24,6 +25,7 @@ double RPN::GetNumber(size_t &index) {
   std::regex_token_iterator<std::string::iterator> next(
       infix_.begin() + index, infix_.end(), double_regex);
   index += next->length() - 1;
+  // std::cout << "num: " << *next << "\n";
   return std::stod(*next);
 }
 
@@ -39,7 +41,7 @@ std::queue<Lexeme> RPN::InfixToPostfix() {
   std::queue<Lexeme> postfix;
   std::stack<Lexeme> stack;
 
-  for (size_t i = 0; i < infix_.length(); i++) {
+  for (size_t i = 0; i < infix_.length() && valid_expression_; i++) {
     std::string operation{};
     if (std::isdigit(infix_[i])) {
       postfix.push(Lexeme(GetNumber(i)));
@@ -50,23 +52,33 @@ std::queue<Lexeme> RPN::InfixToPostfix() {
       while (!stack.empty() && stack.top().operation_ != "(") {
         FromStackToPostfix(postfix, stack);
       }
-      stack.pop();
+      if (!stack.empty() && stack.top().operation_ == "(") {
+        stack.pop();
+      } else {
+        valid_expression_ = false;
+      }
     } else {
       if (std::isalpha(infix_[i])) {
         operation = GetFunction(i);
       } else {
         operation.push_back(infix_[i]);
       }
+      // std::cout << "operation = " << operation << "\n";
       if (operation_priority.find(operation) != operation_priority.end()) {
         while (!stack.empty() && (operation_priority[stack.top().operation_] >=
                                   operation_priority[operation])) {
           FromStackToPostfix(postfix, stack);
         }
         stack.push(Lexeme(operation));
+      } else {
+        // std::cout << "incorrect oper = " << operation << "\n ";
+        valid_expression_ = false;
       }
     }
   }
   while (!stack.empty()) {
+    if (stack.top().operation_ == "(")
+      valid_expression_ = false;
     FromStackToPostfix(postfix, stack);
   }
   return postfix;
@@ -88,7 +100,8 @@ void RPN::Print() {
   }
 }
 
-double RPN::Calculate(std::string operation, double first, double second) {
+double RPN::CalculateArithmetic(std::string operation, double first,
+                                double second) {
   if (operation == "+")
     return first + second;
   else if (operation == "-")
@@ -112,12 +125,18 @@ bool RPN::NeedTwoArguments(std::string &operation) {
 }
 
 double RPN::GetArithmeticResult(std::stack<double> &stack) {
-  double result = 0;
-  double second = stack.top();
-  stack.pop();
-  double first = stack.top();
-  stack.pop();
-  result = Calculate(postfix_.front().operation_, first, second);
+  double result, second, first = 0;
+  if (!stack.empty()) {
+    second = stack.top();
+    stack.pop();
+  } else
+    valid_expression_ = false;
+  if (!stack.empty()) {
+    first = stack.top();
+    stack.pop();
+  } else
+    valid_expression_ = false;
+  result = CalculateArithmetic(postfix_.front().operation_, first, second);
   return result;
 }
 
@@ -147,23 +166,27 @@ double RPN::GetFunctionResult(std::stack<double> &stack) {
   return result;
 }
 
-double RPN::GetCalculationResult() {
+std::pair<bool, double> RPN::GetCalculationResult() {
   double result = 0;
+  if (!valid_expression_)
+    return std::pair<bool, double>(valid_expression_, result);
   std::stack<double> stack;
   while (!postfix_.empty()) {
     if (postfix_.front().is_number_) {
       stack.push(postfix_.front().number_);
+    } else if (NeedTwoArguments(postfix_.front().operation_)) {
+      stack.push(GetArithmeticResult(stack));
     } else {
-      if (NeedTwoArguments(postfix_.front().operation_)) {
-        stack.push(GetArithmeticResult(stack));
-      } else {
-        stack.push(GetFunctionResult(stack));
-      }
+      stack.push(GetFunctionResult(stack));
     }
     postfix_.pop();
   }
-  result = stack.top();
-  return result;
+  if (!stack.empty())
+    result = stack.top();
+  else
+    valid_expression_ = false;
+  // std::cout << "is valid = " << valid_expression_ << "\n";
+  return std::pair<bool, double>(valid_expression_, result);
 }
 
 } // namespace s21
