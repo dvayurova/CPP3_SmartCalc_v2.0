@@ -11,8 +11,9 @@ void RPN::ValidateInfix() {
   std::transform(infix_.begin(), infix_.end(), infix_.begin(), ::tolower);
   infix_.erase(remove(infix_.begin(), infix_.end(), ' '), infix_.end());
   for (size_t i = 0; i < infix_.length(); i++) {
-    if (infix_[i] == '-' && (i == 0 || infix_[i - 1] == '(')) {
-      infix_.insert(i, 1, '0');  // добавляю 0 перед унарным минусом
+    if ((infix_[i] == '-' || infix_[i] == '+') &&
+        (i == 0 || infix_[i - 1] == '(')) {
+      infix_.insert(i, 1, '0'); // добавляю 0 перед унарным -+
     }
   }
   // std::cout << "\n infix_ string after validation: " << infix_ << " ";
@@ -72,16 +73,16 @@ void RPN::Print() {
 
 double RPN::Calculate(char operation, double first, double second) {
   switch (operation) {
-    case '+':
-      return first + second;
-    case '-':
-      return first - second;
-    case '*':
-      return first * second;
-    case '/':
-      return first / second;
-    case '^':
-      return std::pow(first, second);
+  case '+':
+    return first + second;
+  case '-':
+    return first - second;
+  case '*':
+    return first * second;
+  case '/':
+    return first / second;
+  case '^':
+    return std::pow(first, second);
   }
   return 0;
 }
@@ -105,4 +106,4 @@ double RPN::GetCalculationResult() {
   return result;
 }
 
-}  // namespace s21
+} // namespace s21
