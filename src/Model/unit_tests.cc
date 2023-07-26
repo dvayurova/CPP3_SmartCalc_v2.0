@@ -370,16 +370,10 @@ TEST(ModelTest, IncorrectExpression22) {
 }
 
 TEST(ModelTest, IncorrectExpression23) {
-  std::string expression = "00 + 3";
+  std::string expression = "";
   s21::RPN model(expression);
   ASSERT_FALSE(model.GetCalculationResult().first);
 }
-
-// TEST(ModelTest, IncorrectExpression23) {
-//   std::string expression = "";
-//   s21::RPN model(expression);
-//   ASSERT_FALSE(model.GetCalculationResult().first);
-// }
 
 int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);

@@ -138,9 +138,12 @@ double RPN::GetArithmeticResult(std::stack<double> &stack) {
 }
 
 double RPN::GetFunctionResult(std::stack<double> &stack) {
-  double result = 0;
-  double number = stack.top();
-  stack.pop();
+  double result, number = 0;
+  if (!stack.empty()) {
+    number = stack.top();
+    stack.pop();
+  } else
+    valid_expression_ = false;
   if (postfix_.front().operation_ == "cos") {
     result = std::cos(number);
   } else if (postfix_.front().operation_ == "sin") {
@@ -168,7 +171,7 @@ std::pair<bool, double> RPN::GetCalculationResult() {
   if (!valid_expression_)
     return std::pair<bool, double>(valid_expression_, result);
   std::stack<double> stack;
-  while (!postfix_.empty()) {
+  while (!postfix_.empty() && valid_expression_) {
     if (postfix_.front().is_number_) {
       stack.push(postfix_.front().number_);
     } else if (NeedTwoArguments(postfix_.front().operation_)) {
