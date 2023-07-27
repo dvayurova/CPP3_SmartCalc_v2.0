@@ -25,5 +25,5 @@ private:
 };
 
 } // namespace s21
-#include "validation.cc"
+// #include "validation.cc"
 #endif //  CPP3_SMARTCALC_V2_MODEL_VALIDATION_VALIDATION_H_

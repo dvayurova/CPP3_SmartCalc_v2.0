@@ -1,7 +1,8 @@
 #ifndef CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
 #define CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
 
-#include "../lexeme.h"
+// #include "../lexeme.h"
+#include "../Postfix/postfix.h"
 #include <cmath>
 #include <queue>
 #include <stack>
@@ -27,5 +28,5 @@ private:
 
 } // namespace s21
 
-#include "calculation.cc"
+// #include "calculation.cc"
 #endif //  CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_

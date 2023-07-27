@@ -1,9 +1,14 @@
-#include "consoleView.h"
+#include "View/view.h"
 
-int main() {
-    ExampleModel model;
-    ExampleController controller(&model);
-    ConsoleView view(&controller);
-    view.startEventLoop();
-    return 1;
+#include <QApplication>
+
+int main(int argc, char *argv[]) {
+  QApplication a(argc, argv);
+
+  s21::CalculatorModel m;
+  s21::Controller c(&m);
+  View w(&c);
+
+  w.show();
+  return a.exec();
 }

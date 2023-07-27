@@ -1,13 +1,9 @@
 #ifndef CPP3_SMARTCALC_V2_MODEL_MODEL_H_
 #define CPP3_SMARTCALC_V2_MODEL_MODEL_H_
 
-#include <iostream> // delete
 #include <queue>
 
 #include "Calculation/calculation.h"
-#include "Postfix/postfix.h"
-#include "Validation/validation.h"
-#include "lexeme.h"
 
 namespace s21 {
 

@@ -48,7 +48,8 @@ double Calculation::GetArithmeticResult(std::queue<Lexeme> &postfix,
 
 double Calculation::GetFunctionResult(std::queue<Lexeme> &postfix,
                                       std::stack<double> &stack) {
-  double result, number = 0;
+  double result = 0;
+  double number = 0;
   if (!stack.empty()) {
     number = stack.top();
     stack.pop();
