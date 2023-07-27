@@ -23,6 +23,7 @@ private:
   bool NeedTwoArguments(std::string &operation);
 
   bool valid_expression_;
+  Lexeme lexeme_;
 };
 
 } // namespace s21

@@ -1,5 +1,4 @@
 #include "postfix.h"
-
 namespace s21 {
 
 std::queue<Lexeme>
@@ -20,13 +19,10 @@ PostfixExpression::ConvertToPostfix(std::string &expression) {
       }
       stack.pop();
     } else {
-      if (std::isalpha(infix_[i])) {
-        operation = infix_.GetFunction(i);
-      } else {
-        operation.push_back(infix_[i]);
-      }
-      while (!stack.empty() && (operation_priority[stack.top().operation_] >=
-                                operation_priority[operation])) {
+      operation = infix_.GetOperation(i);
+      while (!stack.empty() &&
+             (lexeme_.operation_priority[stack.top().operation_] >=
+              lexeme_.operation_priority[operation])) {
         FromStackToPostfix(stack);
       }
       stack.push(Lexeme(operation));

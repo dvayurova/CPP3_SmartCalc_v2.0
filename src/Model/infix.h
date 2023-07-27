@@ -13,11 +13,12 @@ public:
 
   double GetNumber(size_t &index);
   std::string GetFunction(size_t &index);
-  void PrepareInfix();
+
   size_t GetLength();
   char &operator[](size_t i);
   std::string &operator=(std::string &str);
   std::string &GetString();
+  std::string GetOperation(size_t &index);
 
 private:
   std::string infix_;
@@ -34,21 +35,6 @@ char &Infix::operator[](size_t i) { return infix_[i]; }
 
 size_t Infix::GetLength() { return infix_.length(); }
 
-void Infix::PrepareInfix() {
-  std::transform(infix_.begin(), infix_.end(), infix_.begin(), ::tolower);
-  infix_.erase(remove(infix_.begin(), infix_.end(), ' '), infix_.end());
-  for (size_t i = 0; i < infix_.length(); i++) {
-    if ((infix_[i] == '-' || infix_[i] == '+') &&
-        (i == 0 || infix_[i - 1] == '(')) {
-      infix_.insert(i, 1, '0'); // добавляю 0 перед унарным -+
-    }
-    if ((infix_[i] == '(' || (std::isalpha(infix_[i]) && infix_[i] != 'm')) &&
-        std::isdigit(infix_[i - 1])) {
-      infix_.insert(i, 1, '*'); // добавляю опущенный знак *
-    }
-  }
-}
-
 double Infix::GetNumber(size_t &index) {
   std::regex double_regex("[-+]?\\d+([.]\\d+)?(e[-+]?\\d+)?");
   std::regex_token_iterator<std::string::iterator> next(
@@ -63,6 +49,17 @@ std::string Infix::GetFunction(size_t &index) {
       infix_.begin() + index, infix_.end(), function_regex);
   index += next->length() - 1;
   return *next;
+}
+
+std::string Infix::GetOperation(size_t &index) {
+  std::string operation{};
+  if (std::isalpha(infix_[index])) {
+    operation = GetFunction(index);
+  } else {
+    operation.push_back(infix_[index]);
+  }
+  // std::cout << "operation: " << operation << "\n";
+  return operation;
 }
 
 } // namespace s21

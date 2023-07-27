@@ -20,6 +20,7 @@ public:
 private:
   std::queue<Lexeme> postfix_;
   Infix infix_;
+  Lexeme lexeme_;
 
   void FromStackToPostfix(std::stack<Lexeme> &stack);
 };
