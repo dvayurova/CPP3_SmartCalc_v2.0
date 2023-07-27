@@ -43,7 +43,6 @@ void Infix::PrepareInfix() {
       infix_.insert(i, 1, '0'); // добавляю 0 перед унарным -+
     }
   }
-  // std::cout << "\n infix_ string after validation: " << infix_ << " ";
 }
 
 double Infix::GetNumber(size_t &index) {
@@ -51,7 +50,6 @@ double Infix::GetNumber(size_t &index) {
   std::regex_token_iterator<std::string::iterator> next(
       infix_.begin() + index, infix_.end(), double_regex);
   index += next->length() - 1;
-  //   std::cout << "num: " << *next << "\n";
   return std::stod(*next);
 }
 

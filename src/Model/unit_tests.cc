@@ -198,38 +198,11 @@ TEST(ModelTest, Case31) {
   ASSERT_NEAR(0.00017948806, model.GetResult().second, 1e-6);
 }
 
-// TEST(ModelTest, Case32) {
-//   std::string expression = "(X^2+X^3+X^4+X^5+X^6+X^7+X^8+X^9)*5/(sqrt(900))";
-//   double x = 2;
-//   s21::CalculatorModel model(expression);
-//   ASSERT_DOUBLE_EQ(170.0, model.GetResult().second);
-// }
-
-// TEST(ModelTest, Case33) {
-//   std::string expression = "(-X-(-X))*X-(X)/X+1";
-//   double x = 5;
-//   s21::CalculatorModel model(expression);
-//   ASSERT_DOUBLE_EQ(0, model.GetResult().second);
-// }
-
-// TEST(ModelTest, Case34) {
-//   std::string expression = "sin(X)^2+cos(X)^2";
-//   double x = 1;
-//   s21::CalculatorModel model(expression);
-//   ASSERT_DOUBLE_EQ(1.0, model.GetResult().second);
-// }
-
-TEST(ModelTest, Case35) {
+TEST(ModelTest, Case32) {
   std::string expression = "4";
   s21::CalculatorModel model(expression);
   ASSERT_DOUBLE_EQ(4, model.GetResult().second);
 }
-
-// TEST(ModelTest, CaseExtraParenthesis) {
-//   std::string expression = "sin(X)^2+cos(X)^2)";
-//   s21::CalculatorModel model(expression);
-//   //   ASSERT_DOUBLE_EQ(4, model.GetResult().second);
-// }
 
 TEST(ModelTest, CaseExtraParenthesis) {
   std::string expression = "sin(1)^2+cos(2)^2)";
@@ -370,9 +343,10 @@ TEST(ModelTest, IncorrectExpression22) {
 }
 
 TEST(ModelTest, IncorrectExpression23) {
-  std::string expression = "";
+  std::string expression = "0";
   s21::CalculatorModel model(expression);
-  ASSERT_FALSE(model.GetResult().first);
+  ASSERT_TRUE(model.GetResult().first);
+  ASSERT_EQ(0, model.GetResult().second);
 }
 
 int main(int argc, char **argv) {

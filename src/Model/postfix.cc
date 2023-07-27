@@ -8,7 +8,7 @@ PostfixExpression::ConvertToPostfix(std::string &expression) {
   infix_ = expression;
   infix_.PrepareInfix();
 
-  for (size_t i = 0; i < infix_.GetLength() && valid_expression_; i++) {
+  for (size_t i = 0; i < infix_.GetLength(); i++) {
     std::string operation{};
     if (std::isdigit(infix_[i])) {
       postfix_.push(Lexeme(infix_.GetNumber(i)));
@@ -26,7 +26,6 @@ PostfixExpression::ConvertToPostfix(std::string &expression) {
       } else {
         operation.push_back(infix_[i]);
       }
-      // std::cout << "operation = " << operation << "\n";
       while (!stack.empty() && (operation_priority[stack.top().operation_] >=
                                 operation_priority[operation])) {
         FromStackToPostfix(stack);

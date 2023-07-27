@@ -77,7 +77,7 @@ double Calculation::GetFunctionResult(std::queue<Lexeme> &postfix,
 
 std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
   double result = 0;
-  bool valid_expression_ = true;
+  valid_expression_ = true;
   std::stack<double> stack;
 
   while (!postfix.empty() && valid_expression_) {
@@ -92,7 +92,6 @@ std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
   }
   if (!stack.empty())
     result = stack.top();
-  // std::cout << "is valid = " << valid_expression_ << "\n";
   return std::pair<bool, double>(valid_expression_, result);
 }
 

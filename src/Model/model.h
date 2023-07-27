@@ -17,7 +17,6 @@ public:
   std::pair<bool, double> GetResult() {
     bool is_valid = validation_.IsValid(expression_);
     if (is_valid) {
-      // std::cout << "is_valid: " << is_valid << "\n";
       return calculation_.GetCalcResult(postfix_.ConvertToPostfix(expression_));
     }
     return std::pair<bool, double>(is_valid, 0);

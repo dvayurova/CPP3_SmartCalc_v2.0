@@ -11,7 +11,8 @@ int main() {
 
   // s21::CalculatorModel model("sin(20)");
 
-  s21::CalculatorModel model("289.1 + 234.2 * 4");
+  // s21::CalculatorModel model("289.1 + 234.2 * 4");
+  s21::CalculatorModel model("+");
   std::pair<bool, double> res = model.GetResult();
   std::cout << "\n res = " << res.second;
   std::cout << "\n res valid = " << res.first;
