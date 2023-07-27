@@ -4,10 +4,10 @@
 #include <iostream> // delete
 #include <queue>
 
-#include "calculation.h"
+#include "Calculation/calculation.h"
+#include "Validation/validation.h"
 #include "lexeme.h"
 #include "postfix.h"
-#include "validation.h"
 
 namespace s21 {
 

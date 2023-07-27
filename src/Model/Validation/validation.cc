@@ -1,28 +1,5 @@
-#ifndef SRC_MODEL_VALIDATION_H_
-#define SRC_MODEL_VALIDATION_H_
-
-#include "infix.h"
-#include "lexeme.h"
-#include <stack>
-
+#include "validation.h"
 namespace s21 {
-
-class Validation {
-public:
-  Validation() {}
-  bool IsValid(std::string &expression);
-
-private:
-  Infix infix_;
-  std::string expression_;
-  std::stack<Lexeme> stack_;
-  void PrepareExpression();
-  void AddAsterisk(size_t &i);
-  void AddZeroToUnarySign(size_t &i);
-  bool CheckBrackets(size_t &i);
-  bool IsOperation(size_t &i);
-  bool CheckExtraBrackets();
-};
 
 bool Validation::IsValid(std::string &expression) {
   expression_ = expression;
@@ -109,5 +86,3 @@ void Validation::AddZeroToUnarySign(size_t &i) {
 }
 
 } // namespace s21
-
-#endif //  SRC_MODEL_VALIDATION_H_

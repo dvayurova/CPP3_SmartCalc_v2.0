@@ -23,6 +23,7 @@ private:
   Lexeme lexeme_;
 
   void FromStackToPostfix(std::stack<Lexeme> &stack);
+  void ParseBrackets(std::stack<Lexeme> &stack, size_t &i);
 };
 } // namespace s21
 

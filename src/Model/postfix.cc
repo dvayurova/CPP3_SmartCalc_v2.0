@@ -10,14 +10,8 @@ PostfixExpression::ConvertToPostfix(std::string &expression) {
     std::string operation{};
     if (std::isdigit(infix_[i])) {
       postfix_.push(Lexeme(infix_.GetNumber(i)));
-    } else if (infix_[i] == '(') {
-      operation.push_back(infix_[i]);
-      stack.push(Lexeme(operation));
-    } else if (infix_[i] == ')') {
-      while (!stack.empty() && stack.top().operation_ != "(") {
-        FromStackToPostfix(stack);
-      }
-      stack.pop();
+    } else if (infix_[i] == '(' || infix_[i] == ')') {
+      ParseBrackets(stack, i);
     } else {
       operation = infix_.GetOperation(i);
       while (!stack.empty() &&
@@ -37,6 +31,19 @@ PostfixExpression::ConvertToPostfix(std::string &expression) {
 void PostfixExpression::FromStackToPostfix(std::stack<Lexeme> &stack) {
   postfix_.push(stack.top());
   stack.pop();
+}
+
+void PostfixExpression::ParseBrackets(std::stack<Lexeme> &stack, size_t &i) {
+  std::string operation{};
+  if (infix_[i] == '(') {
+    operation.push_back(infix_[i]);
+    stack.push(Lexeme(operation));
+  } else if (infix_[i] == ')') {
+    while (!stack.empty() && stack.top().operation_ != "(") {
+      FromStackToPostfix(stack);
+    }
+    stack.pop();
+  }
 }
 
 void PostfixExpression::Print() {

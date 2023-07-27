@@ -1,7 +1,7 @@
-#ifndef SRC_MODEL_CALCULATION_H_
-#define SRC_MODEL_CALCULATION_H_
+#ifndef CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
+#define CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
 
-#include "lexeme.h"
+#include "../lexeme.h"
 #include <cmath>
 #include <queue>
 #include <stack>
@@ -23,10 +23,9 @@ private:
   bool NeedTwoArguments(std::string &operation);
 
   bool valid_expression_;
-  Lexeme lexeme_;
 };
 
 } // namespace s21
 
 #include "calculation.cc"
-#endif //  SRC_MODEL_MODEL_H_
+#endif //  CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_

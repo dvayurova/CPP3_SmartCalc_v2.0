@@ -20,7 +20,8 @@ double Calculation::CalculateArithmetic(std::string operation, double first,
 }
 
 bool Calculation::NeedTwoArguments(std::string &operation) {
-  if (lexeme_.operation_priority[operation] == FUNCTION) {
+  Lexeme lexeme;
+  if (lexeme.operation_priority[operation] == FUNCTION) {
     return false;
   }
   return true;
