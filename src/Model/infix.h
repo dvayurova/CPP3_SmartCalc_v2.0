@@ -15,13 +15,15 @@ public:
   std::string GetFunction(size_t &index);
   void PrepareInfix();
   size_t GetLength();
-  bool IsDigit(size_t &i);
   char &operator[](size_t i);
   std::string &operator=(std::string &str);
+  std::string &GetString();
 
 private:
   std::string infix_;
 };
+
+std::string &Infix::GetString() { return infix_; }
 
 std::string &Infix::operator=(std::string &str) {
   infix_ = str;
@@ -29,8 +31,6 @@ std::string &Infix::operator=(std::string &str) {
 }
 
 char &Infix::operator[](size_t i) { return infix_[i]; }
-
-bool Infix::IsDigit(size_t &i) { return std::isdigit(infix_[i]); }
 
 size_t Infix::GetLength() { return infix_.length(); }
 
@@ -41,6 +41,10 @@ void Infix::PrepareInfix() {
     if ((infix_[i] == '-' || infix_[i] == '+') &&
         (i == 0 || infix_[i - 1] == '(')) {
       infix_.insert(i, 1, '0'); // добавляю 0 перед унарным -+
+    }
+    if ((infix_[i] == '(' || (std::isalpha(infix_[i]) && infix_[i] != 'm')) &&
+        std::isdigit(infix_[i - 1])) {
+      infix_.insert(i, 1, '*'); // добавляю опущенный знак *
     }
   }
 }

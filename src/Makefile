@@ -20,7 +20,7 @@ rebuild: clean all
 
 test: clean
 	$(CC) $(CFLAGS) $(GCOVFLAGS) -o test -lgtest -pthread unit_tests.cc
-	./test
+	 ./test
 
 memcheck: test
 ifeq ($(OS), Darwin)

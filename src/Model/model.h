@@ -14,12 +14,14 @@ namespace s21 {
 class CalculatorModel {
 public:
   CalculatorModel(std::string expression) : expression_(expression){};
+
   std::pair<bool, double> GetResult() {
     bool is_valid = validation_.IsValid(expression_);
-    if (is_valid) {
-      return calculation_.GetCalcResult(postfix_.ConvertToPostfix(expression_));
+    // std::cout << "\n string after valid = " << expression_ << "\n";
+    if (!is_valid) {
+      return std::pair<bool, double>(is_valid, 0);
     }
-    return std::pair<bool, double>(is_valid, 0);
+    return calculation_.GetCalcResult(postfix_.ConvertToPostfix(expression_));
   }
 
 private:

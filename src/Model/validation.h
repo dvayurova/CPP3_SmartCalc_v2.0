@@ -25,7 +25,7 @@ bool Validation::IsValid(std::string &expression) {
 
   for (size_t i = 0; i < infix_.GetLength() && valid_expression_; i++) {
     std::string operation{};
-    if (infix_.IsDigit(i)) {
+    if (std::isdigit(infix_[i])) {
       infix_.GetNumber(i);
     } else if (infix_[i] == '(') {
       if (infix_[i + 1] == ')') {
@@ -58,6 +58,8 @@ bool Validation::IsValid(std::string &expression) {
       valid_expression_ = false;
     stack.pop();
   }
+  expression = infix_.GetString();
+  // std::cout << "prepared infix = " << infix_.GetString() << "\n";
   return valid_expression_;
 }
 

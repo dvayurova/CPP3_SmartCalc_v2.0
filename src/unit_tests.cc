@@ -3,7 +3,7 @@
 #include <cmath>
 #include <string>
 
-#include "model.h"
+#include "Model/model.h"
 
 TEST(ModelTest, Case1) {
   std::string expression = "289.1 + 234.2 * 4";
@@ -204,6 +204,12 @@ TEST(ModelTest, Case32) {
   ASSERT_DOUBLE_EQ(4, model.GetResult().second);
 }
 
+TEST(ModelTest, Case33) {
+  std::string expression = "2(5)";
+  s21::CalculatorModel model(expression);
+  ASSERT_DOUBLE_EQ(10, model.GetResult().second);
+}
+
 TEST(ModelTest, CaseExtraParenthesis) {
   std::string expression = "sin(1)^2+cos(2)^2)";
   s21::CalculatorModel model(expression);
@@ -343,10 +349,9 @@ TEST(ModelTest, IncorrectExpression22) {
 }
 
 TEST(ModelTest, IncorrectExpression23) {
-  std::string expression = "0";
+  std::string expression = "+-+-+-+-+-+-";
   s21::CalculatorModel model(expression);
-  ASSERT_TRUE(model.GetResult().first);
-  ASSERT_EQ(0, model.GetResult().second);
+  ASSERT_FALSE(model.GetResult().first);
 }
 
 int main(int argc, char **argv) {

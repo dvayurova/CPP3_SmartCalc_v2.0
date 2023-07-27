@@ -6,7 +6,6 @@ std::queue<Lexeme>
 PostfixExpression::ConvertToPostfix(std::string &expression) {
   std::stack<Lexeme> stack;
   infix_ = expression;
-  infix_.PrepareInfix();
 
   for (size_t i = 0; i < infix_.GetLength(); i++) {
     std::string operation{};

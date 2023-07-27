@@ -19,7 +19,6 @@ public:
 
 private:
   std::queue<Lexeme> postfix_;
-  bool valid_expression_;
   Infix infix_;
 
   void FromStackToPostfix(std::stack<Lexeme> &stack);
