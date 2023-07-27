@@ -73,7 +73,7 @@ void Validation::PrepareExpression() {
 void Validation::AddAsterisk(size_t &i) {
   if ((expression_[i] == '(' ||
        (std::isalpha(expression_[i]) && expression_[i] != 'm')) &&
-      std::isdigit(expression_[i - 1])) {
+      (i != 0 && std::isdigit(expression_[i - 1]))) {
     expression_.insert(i, 1, '*');
   }
 }

@@ -31,6 +31,7 @@ private:
   friend class PostfixExpression;
   friend class Validation;
 };
+
 } // namespace s21
 
 #endif //  SRC_MODEL_LEXEME_H_

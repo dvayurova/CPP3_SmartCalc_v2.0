@@ -1,6 +1,6 @@
 .PHONY: all test gcov_report check rebuild clean memcheck
-CC = gcc -lstdc++
-CFLAGS = -Wall -Werror -Wextra -std=c++17
+CC = g++
+CFLAGS = -Wall -Werror -Wextra -std=c++17 -g
 GCOVFLAGS = -fprofile-arcs -ftest-coverage
 LC = lcov -c -d .
 OS = $(shell uname -s)
@@ -19,7 +19,7 @@ clean:
 rebuild: clean all
 
 test: clean
-	$(CC) $(CFLAGS) $(GCOVFLAGS) -o test -lgtest -pthread unit_tests.cc
+	$(CC) $(CFLAGS) $(GCOVFLAGS) unit_tests.cc -lgtest -pthread -o test 
 	 ./test
 
 memcheck: test
