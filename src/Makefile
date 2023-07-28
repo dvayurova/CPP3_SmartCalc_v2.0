@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Wextra -std=c++17 -g
 GCOVFLAGS = -fprofile-arcs -ftest-coverage
 LC = lcov -c -d .
 OS = $(shell uname -s)
-
+SOURCES = Model/*.cc  Model/Validation/*.cc  Model/Postfix/*.cc Model/Calculation/*cc
 all: gcov_report
 
 clean:
@@ -19,7 +19,7 @@ clean:
 rebuild: clean all
 
 test: clean
-	$(CC) $(CFLAGS) $(GCOVFLAGS) unit_tests.cc -lgtest -pthread -o test 
+	$(CC) $(CFLAGS) $(GCOVFLAGS) $(SOURCES) unit_tests.cc -lgtest -pthread -o test 
 	 ./test
 
 memcheck: test

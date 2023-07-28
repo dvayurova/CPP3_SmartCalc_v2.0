@@ -8,23 +8,24 @@
 namespace s21 {
 
 class CalculatorModel {
-public:
+ public:
   CalculatorModel(){};
 
-  std::pair<bool, double> GetResult(std::string &expression) {
-    bool is_valid = validation_.IsValid(expression);
+  std::pair<bool, double> GetResult(std::string& expression,
+                                    std::string& x_value) {
+    bool is_valid = validation_.IsValid(expression, x_value);
     if (!is_valid) {
       return std::pair<bool, double>(is_valid, 0);
     }
     return calculation_.GetCalcResult(postfix_.ConvertToPostfix(expression));
   }
 
-private:
+ private:
   Validation validation_;
   PostfixExpression postfix_;
   Calculation calculation_;
 };
 
-} // namespace s21
+}  // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_MODEL_MODEL_H_
+#endif  //  CPP3_SMARTCALC_V2_MODEL_MODEL_H_

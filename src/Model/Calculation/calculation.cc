@@ -92,9 +92,9 @@ std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
     }
     postfix.pop();
   }
-  if (!stack.empty())
-    result = stack.top();
+  if (!stack.empty()) result = stack.top();
+  if (std::isnan(result) || std::isinf(result)) valid_expression_ = false;
   return std::pair<bool, double>(valid_expression_, result);
 }
 
-} // namespace s21
+}  // namespace s21
