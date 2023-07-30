@@ -1,5 +1,6 @@
 #include "view.h"
 
+
 #include "ui_view.h"
 
 View::View(s21::Controller *c, QWidget *parent)
@@ -60,8 +61,12 @@ void View::ButtonPressed() {
 }
 
 void View::ButtonEqualPressed() {
-  std::pair<bool, double> result = controller_->GetMainCalcResult(
-      ui->lineEdit->text().toStdString(), ui->lineEdit_X->text().toStdString());
+   std::string expression =  ui->lineEdit->text().toStdString();
+    std::string x_value = ui->lineEdit_X->text().toStdString();
+
+  std::pair<bool, double> result = {0,0};
+      result = controller_->GetMainCalcResult(expression, x_value);
+
   if (result.first) {
     ui->lineEdit->setText(QString::number(result.second, 'g', 16));
   } else {

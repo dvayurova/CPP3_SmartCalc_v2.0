@@ -5,6 +5,13 @@
 
 #include "Model/model.h"
 
+TEST(ModelTest, Case0) {
+  std::string expression = "2^3^2";
+  std::string x_value = " ";
+  s21::CalculatorModel model;
+  ASSERT_DOUBLE_EQ(512, model.GetResult(expression, x_value).second);
+}
+
 TEST(ModelTest, Case1) {
   std::string expression = "289.1 + 234.2 * 4";
   std::string x_value = " ";
@@ -16,7 +23,7 @@ TEST(ModelTest, Case2) {
   std::string expression = "-2^2^2^(-4/5) ";
   std::string x_value = " ";
   s21::CalculatorModel model;
-  ASSERT_DOUBLE_EQ(-0.1088188204120155,
+  ASSERT_DOUBLE_EQ(-2.8069543430559577,
                    model.GetResult(expression, x_value).second);
 }
 
@@ -215,9 +222,8 @@ TEST(ModelTest, Case28) {
 }
 
 TEST(ModelTest, Case29) {
-  std::string expression =
-      "tan(-85)*tan(15)+asin(0.8)-acos(1)/"
-      "atan(0.5)+acos(-0.3)+asin(-0.7)*atan(-0.5)";
+  std::string expression = "tan(-85)*tan(15)+asin(0.8)-acos(1)/"
+                           "atan(0.5)+acos(-0.3)+asin(-0.7)*atan(-0.5)";
   std::string x_value = " ";
   s21::CalculatorModel model;
   ASSERT_NEAR(3.31540708, model.GetResult(expression, x_value).second, 1e-6);

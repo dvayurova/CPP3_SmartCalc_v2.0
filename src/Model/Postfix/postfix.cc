@@ -25,15 +25,22 @@ void PostfixExpression::FromStackToPostfix() {
 }
 
 void PostfixExpression::ParseOperation(size_t &i) {
-  Lexeme lexeme;
   std::string operation{};
   operation = infix_.GetOperation(i);
-  while (!stack_.empty() &&
-         (lexeme.operation_priority[stack_.top().operation_] >=
-          lexeme.operation_priority[operation])) {
+  while (!stack_.empty() && CheckOperationPriority(operation)) {
     FromStackToPostfix();
   }
   stack_.push(Lexeme(operation));
+}
+
+bool PostfixExpression::CheckOperationPriority(std::string &operation) {
+  Lexeme l;
+  if ((operation != "^" && (l.operation_priority[stack_.top().operation_] >=
+                            l.operation_priority[operation])) ||
+      (operation == "^" && (l.operation_priority[stack_.top().operation_] >
+                            l.operation_priority[operation])))
+    return true;
+  return false;
 }
 
 void PostfixExpression::ParseBrackets(size_t &i) {

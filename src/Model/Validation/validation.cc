@@ -1,4 +1,5 @@
 #include "validation.h"
+
 namespace s21 {
 
 bool Validation::IsValid(std::string &expression, std::string &x_value) {
@@ -16,7 +17,8 @@ bool Validation::IsValid(std::string &expression, std::string &x_value) {
       valid_expression_ = false;
     }
   }
-  if (CheckExtraBrackets()) valid_expression_ = false;
+  if (CheckExtraBrackets())
+    valid_expression_ = false;
   expression = infix_.GetString();
   return valid_expression_;
 }
@@ -52,7 +54,8 @@ bool Validation::CheckBrackets(size_t &i) {
 
 bool Validation::CheckExtraBrackets() {
   while (!stack_.empty()) {
-    if (stack_.top().operation_ == "(") return true;
+    if (stack_.top().operation_ == "(")
+      return true;
     stack_.pop();
   }
   return false;
@@ -92,4 +95,4 @@ void Validation::AddZeroToUnarySign(size_t &i) {
   }
 }
 
-}  // namespace s21
+} // namespace s21

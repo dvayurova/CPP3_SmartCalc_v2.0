@@ -35,13 +35,15 @@ double Calculation::GetArithmeticResult(std::queue<Lexeme> &postfix,
   if (!stack.empty()) {
     second = stack.top();
     stack.pop();
-  } else
+  } else {
     valid_expression_ = false;
+  }
   if (!stack.empty()) {
     first = stack.top();
     stack.pop();
-  } else
+  } else {
     valid_expression_ = false;
+  }
   result = CalculateArithmetic(postfix.front().operation_, first, second);
   return result;
 }
@@ -53,8 +55,9 @@ double Calculation::GetFunctionResult(std::queue<Lexeme> &postfix,
   if (!stack.empty()) {
     number = stack.top();
     stack.pop();
-  } else
+  } else {
     valid_expression_ = false;
+  }
   if (postfix.front().operation_ == "cos") {
     result = std::cos(number);
   } else if (postfix.front().operation_ == "sin") {
@@ -80,8 +83,7 @@ double Calculation::GetFunctionResult(std::queue<Lexeme> &postfix,
 std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
   double result = 0;
   valid_expression_ = true;
-  std::stack<double> stack;
-
+  std::stack<double> stack = {};
   while (!postfix.empty() && valid_expression_) {
     if (postfix.front().is_number_) {
       stack.push(postfix.front().number_);
@@ -92,9 +94,12 @@ std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
     }
     postfix.pop();
   }
-  if (!stack.empty()) result = stack.top();
-  if (std::isnan(result) || std::isinf(result)) valid_expression_ = false;
+  if (!stack.empty())
+    result = stack.top();
+  if (std::isnan(result) || std::isinf(result)) {
+    valid_expression_ = false;
+  }
   return std::pair<bool, double>(valid_expression_, result);
 }
 
-}  // namespace s21
+} // namespace s21
