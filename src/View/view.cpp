@@ -1,6 +1,5 @@
 #include "view.h"
 
-
 #include "ui_view.h"
 
 View::View(s21::Controller *c, QWidget *parent)
@@ -42,6 +41,9 @@ View::View(s21::Controller *c, QWidget *parent)
   connect(ui->PushButtonPlus, SIGNAL(clicked()), this, SLOT(ButtonPressed()));
   connect(ui->PushButtonDot, SIGNAL(clicked()), this, SLOT(ButtonPressed()));
 
+  connect(ui->PushButtonDel, SIGNAL(clicked()), this, SLOT(ButtonDelPressed()));
+  connect(ui->PushButtonAC, SIGNAL(clicked()), this, SLOT(ButtonACPressed()));
+
   connect(ui->PushButtonEqual, SIGNAL(clicked()), this,
           SLOT(ButtonEqualPressed()));
 }
@@ -61,15 +63,34 @@ void View::ButtonPressed() {
 }
 
 void View::ButtonEqualPressed() {
-   std::string expression =  ui->lineEdit->text().toStdString();
-    std::string x_value = ui->lineEdit_X->text().toStdString();
-
-  std::pair<bool, double> result = {0,0};
-      result = controller_->GetMainCalcResult(expression, x_value);
+  std::pair<bool, double> result = {0, 0};
+  result = controller_->GetMainCalcResult(ui->lineEdit->text().toStdString(),
+                                          ui->lineEdit_X->text().toStdString());
 
   if (result.first) {
     ui->lineEdit->setText(QString::number(result.second, 'g', 16));
   } else {
     ui->lineEdit->setText("ERROR! INCORRECT EXPRESSION");
+  }
+}
+
+void View::ButtonDelPressed() {
+  QString tmp = "";
+  if (ui->lineEdit->hasFocus()) {
+    tmp = ui->lineEdit->text();
+    tmp.chop(1);
+    ui->lineEdit->setText(tmp);
+  } else if (ui->lineEdit_X->hasFocus()) {
+    tmp = ui->lineEdit_X->text();
+    tmp.chop(1);
+    ui->lineEdit_X->setText(tmp);
+  }
+}
+
+void View::ButtonACPressed() {
+  if (ui->lineEdit->hasFocus()) {
+    ui->lineEdit->clear();
+  } else if (ui->lineEdit_X->hasFocus()) {
+    ui->lineEdit_X->clear();
   }
 }

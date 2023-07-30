@@ -25,5 +25,7 @@ private:
  private slots:
      void ButtonPressed();
      void ButtonEqualPressed();
+     void ButtonDelPressed();
+     void ButtonACPressed();
 };
 #endif // VIEW_H
