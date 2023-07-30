@@ -23,7 +23,7 @@ private:
   s21::Controller *controller_;
 
  private slots:
-     void ButtonPressed();s
+     void ButtonPressed();
      void ButtonEqualPressed();
 };
 #endif // VIEW_H

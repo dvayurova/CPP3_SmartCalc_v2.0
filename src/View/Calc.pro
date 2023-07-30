@@ -10,10 +10,20 @@ CONFIG += c++17
 
 SOURCES += \
     ../main.cpp \
-    view.cpp
+    view.cpp \
+    ../Model/Calculation/calculation.cc \
+    ../Model/Postfix/postfix.cc \
+    ../Model/Validation/validation.cc \
+    ../Model/infix.cc
 
 HEADERS += \
-    view.h
+    view.h \
+    ../Controller/controller.h \
+    ../Model/Calculation/calculation.h \
+    ../Model/Postfix/postfix.h \
+    ../Model/Validation/validation.h \
+    ../Model/infix.h \
+    ../Model/lexeme.h
 
 FORMS += \
     view.ui
