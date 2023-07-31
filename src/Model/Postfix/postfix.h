@@ -2,7 +2,6 @@
 #define CPP3_SMARTCALC_V2_MODEL_POSTFIX_POSTFIX_H_
 
 #include "../Validation/validation.h"
-#include <map>
 #include <queue>
 #include <stack>
 
@@ -11,7 +10,8 @@ namespace s21 {
 class PostfixExpression {
 public:
   PostfixExpression() {}
-  std::queue<Lexeme> ConvertToPostfix(std::string &expression);
+  std::queue<Lexeme> ConvertToPostfix(std::string &expression,
+                                      std::string &x_value);
 
 private:
   std::queue<Lexeme> postfix_;

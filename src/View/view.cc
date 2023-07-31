@@ -1,14 +1,13 @@
 #include "view.h"
-
 #include "ui_view.h"
 
-View::View(s21::Controller *c, QWidget *parent)
+namespace s21 {
+View::View(Controller *c, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::View), controller_(c) {
   ui->setupUi(this);
-
-  ui->lineEdit->setPlaceholderText("0.00");
-  ui->lineEdit->setFocus();
-
+  SetDefaultValues();
+  graph = new GraphWidget(controller_);
+  connect(this, &View::GraphSignal, graph, &GraphWidget::GraphSlot);
   connect(ui->PushButton0, SIGNAL(clicked()), this, SLOT(ButtonPressed()));
   connect(ui->PushButton1, SIGNAL(clicked()), this, SLOT(ButtonPressed()));
   connect(ui->PushButton2, SIGNAL(clicked()), this, SLOT(ButtonPressed()));
@@ -44,53 +43,109 @@ View::View(s21::Controller *c, QWidget *parent)
   connect(ui->PushButtonDel, SIGNAL(clicked()), this, SLOT(ButtonDelPressed()));
   connect(ui->PushButtonAC, SIGNAL(clicked()), this, SLOT(ButtonACPressed()));
 
+  connect(ui->PushButtonGraph, SIGNAL(clicked()), this,
+          SLOT(GraphingButtonPressed()));
+
   connect(ui->PushButtonEqual, SIGNAL(clicked()), this,
           SLOT(ButtonEqualPressed()));
+
+  connect(ui->pushButtonCreditCalc, SIGNAL(clicked()), this,
+          SLOT(CreditCalc()));
 }
 
-View::~View() { delete ui; }
+View::~View() {
+  delete graph;
+  delete ui;
+}
 
 void View::ButtonPressed() {
   QPushButton *button = (QPushButton *)sender();
   QString button_text = button->text();
-  QString numbers = "0123456789.- ";
-  if (ui->lineEdit->hasFocus()) {
-    ui->lineEdit->setText(ui->lineEdit->text() += button_text);
-  } else if (ui->lineEdit_X->hasFocus() &&
-             numbers.contains(button_text, Qt::CaseInsensitive)) {
-    ui->lineEdit_X->setText(ui->lineEdit_X->text() += button_text);
+  if (ui->expression->hasFocus()) {
+    ui->expression->setText(ui->expression->text() += button_text);
+  } else if (ui->x_value->hasFocus()) {
+    ui->x_value->setText(ui->x_value->text() += button_text);
   }
 }
 
 void View::ButtonEqualPressed() {
   std::pair<bool, double> result = {0, 0};
-  result = controller_->GetMainCalcResult(ui->lineEdit->text().toStdString(),
-                                          ui->lineEdit_X->text().toStdString());
+  result = controller_->GetMainCalcResult(ui->expression->text().toStdString(),
+                                          ui->x_value->text().toStdString());
 
   if (result.first) {
-    ui->lineEdit->setText(QString::number(result.second, 'g', 16));
+    ui->expression->setText(QString::number(result.second, 'g', 16));
   } else {
-    ui->lineEdit->setText("ERROR! INCORRECT EXPRESSION");
+    ui->expression->setText("error:expression-incorrect");
   }
 }
 
 void View::ButtonDelPressed() {
   QString tmp = "";
-  if (ui->lineEdit->hasFocus()) {
-    tmp = ui->lineEdit->text();
+  if (ui->expression->hasFocus()) {
+    tmp = ui->expression->text();
     tmp.chop(1);
-    ui->lineEdit->setText(tmp);
-  } else if (ui->lineEdit_X->hasFocus()) {
-    tmp = ui->lineEdit_X->text();
+    ui->expression->setText(tmp);
+  } else if (ui->x_value->hasFocus()) {
+    tmp = ui->x_value->text();
     tmp.chop(1);
-    ui->lineEdit_X->setText(tmp);
+    ui->x_value->setText(tmp);
   }
 }
 
 void View::ButtonACPressed() {
-  if (ui->lineEdit->hasFocus()) {
-    ui->lineEdit->clear();
-  } else if (ui->lineEdit_X->hasFocus()) {
-    ui->lineEdit_X->clear();
+  if (ui->expression->hasFocus()) {
+    ui->expression->clear();
+  } else if (ui->x_value->hasFocus()) {
+    ui->x_value->clear();
   }
 }
+
+void View::GraphingButtonPressed() {
+  graph->show();
+  double x_min = ui->lineEditXmin->text().toDouble();
+  double x_max = ui->lineEditXmax->text().toDouble();
+  double y_min = ui->lineEditYmin->text().toDouble();
+  double y_max = ui->lineEditYmax->text().toDouble();
+  emit GraphSignal(x_min, x_max, y_min, y_max,
+                   ui->expression->text().toStdString());
+}
+
+void View::CreditCalc() {
+  double amount = ui->lineEditLoanSum->text().toDouble();
+  int term = ui->Term->value();
+  double rate = ui->Rate->value();
+  if (ui->comboBoxTerm->currentText() == "лет") {
+    term *= 12;
+  }
+  s21::CreditCalc credit(amount, term, rate / 100);
+  if (ui->radioButtonAnnuitet->isChecked() == true) {
+    controller_->GetAnnuityPayment(credit);
+  }
+  if (ui->radioButtonDifferent->isChecked() == true) {
+    controller_->GetDifferPayment(credit);
+  }
+
+  if (ui->radioButtonDifferent->isChecked() == true) {
+    ui->labelPayment->setText(
+        QString::number(credit.GetFirstPayment(), 'f', 2) + " ... " +
+        QString::number(credit.GetLastPayment(), 'f', 2) + " руб.");
+  }
+  if (ui->radioButtonAnnuitet->isChecked() == true) {
+    ui->labelPayment->setText(
+        QString::number(credit.GetMonthlyPayment(), 'f', 2) + " руб.");
+  }
+  ui->labelOverpay->setText(QString::number(credit.GetOverpayment(), 'f', 2) +
+                            " руб.");
+  ui->labelTotal->setText(QString::number(credit.GetTotalPayment(), 'f', 2) +
+                          " руб.");
+}
+
+void View::SetDefaultValues() {
+  ui->expression->setPlaceholderText("0.00");
+  ui->expression->setFocus();
+  ui->radioButtonAnnuitet->setChecked(true);
+  ui->expression->setReadOnly(true);
+}
+
+} // namespace s21

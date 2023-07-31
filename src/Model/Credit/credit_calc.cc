@@ -1,14 +1,7 @@
 #include "credit_calc.h"
+#include <cmath>
 
 namespace s21 {
-void CreditCalc::GetCreditResult(double amount, int term, double rate,
-                                 std::string type) {  // term in month
-  amount_ = amount;
-  term_ = term;
-  rate_ = rate;
-  if (type == "annuity") CalcAnnuityPayment();
-  if (type == "differ") CalcDifferPayment();
-}
 
 void CreditCalc::CalcAnnuityPayment() {
   rate_ /= 12;
@@ -34,4 +27,10 @@ void CreditCalc::CalcDifferPayment() {
   overpayment_ = total_payment_ - amount_;
 }
 
-}  // namespace s21
+double CreditCalc::GetMonthlyPayment() { return monthly_payment_; }
+double CreditCalc::GetOverpayment() { return overpayment_; }
+double CreditCalc::GetTotalPayment() { return total_payment_; }
+double CreditCalc::GetFirstPayment() { return monthly_payment_first_; }
+double CreditCalc::GetLastPayment() { return monthly_payment_last_; }
+
+} // namespace s21

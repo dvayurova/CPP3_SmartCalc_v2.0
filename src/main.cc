@@ -7,8 +7,9 @@ int main(int argc, char *argv[]) {
 
   s21::CalculatorModel m;
   s21::Controller c(&m);
-  View w(&c);
+  s21::View w(&c);
 
+w.setWindowTitle("SmartCalc v2.0");
   w.show();
   return a.exec();
 }

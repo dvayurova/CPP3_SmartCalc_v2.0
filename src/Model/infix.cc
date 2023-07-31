@@ -1,4 +1,5 @@
 #include "infix.h"
+#include <regex>
 
 namespace s21 {
 std::string &Infix::GetString() { return infix_; }
@@ -18,6 +19,16 @@ double Infix::GetNumber(size_t &index) {
       infix_.begin() + index, infix_.end(), double_regex);
   index += next->length() - 1;
   return std::stod(*next);
+}
+
+double Infix::GetX(std::string &x, bool &is_nimber) {
+  double num = 0;
+  try {
+    num = std::stod(x);
+  } catch (const std::exception &e) {
+    is_nimber = false;
+  }
+  return num;
 }
 
 std::string Infix::GetFunction(size_t &index) {

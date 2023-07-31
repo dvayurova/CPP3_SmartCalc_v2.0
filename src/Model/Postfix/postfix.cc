@@ -1,12 +1,14 @@
 #include "postfix.h"
 namespace s21 {
 
-std::queue<Lexeme>
-PostfixExpression::ConvertToPostfix(std::string &expression) {
+std::queue<Lexeme> PostfixExpression::ConvertToPostfix(std::string &expression,
+                                                       std::string &x_value) {
   infix_ = expression;
   for (size_t i = 0; i < infix_.GetLength(); i++) {
     if (std::isdigit(infix_[i])) {
       postfix_.push(Lexeme(infix_.GetNumber(i)));
+    } else if (infix_[i] == 'x') {
+      postfix_.push(Lexeme(std::stod(x_value)));
     } else if (infix_[i] == '(' || infix_[i] == ')') {
       ParseBrackets(i);
     } else {

@@ -15,15 +15,15 @@ public:
 
 private:
   Infix infix_;
-  std::string expression_;
   std::stack<Lexeme> stack_;
-  void PrepareExpression();
-  void AddAsterisk(size_t &i);
-  void AddZeroToUnarySign(size_t &i);
+  void PrepareExpression(std::string &expression);
+  void AddAsterisk(std::string &expression, size_t &i);
+  void AddZeroToUnarySign(std::string &expression, size_t &i);
   bool CheckBrackets(size_t &i);
   bool IsOperation(size_t &i);
   bool CheckExtraBrackets();
-  void ReplaceXToValue(std::string &x_value);
+  void ReplaceXToValue(std::string &expression, std::string &x_value);
+  bool CheckXValue(std::string &x_value);
 };
 
 } // namespace s21

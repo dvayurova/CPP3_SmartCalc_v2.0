@@ -2,7 +2,6 @@
 #define CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
 
 #include "../Postfix/postfix.h"
-#include <cmath>
 #include <queue>
 #include <stack>
 

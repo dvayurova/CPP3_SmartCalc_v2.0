@@ -1,5 +1,5 @@
-#ifndef SRC_MODEL_LEXEME_H_
-#define SRC_MODEL_LEXEME_H_
+#ifndef CPP3_SMARTCALC_V2_MODEL_LEXEME_H_
+#define CPP3_SMARTCALC_V2_MODEL_LEXEME_H_
 
 #include <map>
 #include <string>
@@ -34,4 +34,4 @@ private:
 
 } // namespace s21
 
-#endif //  SRC_MODEL_LEXEME_H_
+#endif //  CPP3_SMARTCALC_V2_MODEL_LEXEME_H_

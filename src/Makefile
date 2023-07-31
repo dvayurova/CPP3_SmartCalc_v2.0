@@ -1,26 +1,21 @@
-.PHONY: all test gcov_report check rebuild clean memcheck
+.PHONY: all install uninstall clean dvi dist tests check memcheck test
 CC = g++
-CFLAGS = -Wall -Werror -Wextra -std=c++17 -g
-GCOVFLAGS = -fprofile-arcs -ftest-coverage
+CFLAGS = -Wall -Werror -Wextra -std=c++17
 LC = lcov -c -d .
 OS = $(shell uname -s)
-SOURCES = Model/*.cc  Model/Validation/*.cc  Model/Postfix/*.cc Model/Calculation/*cc
-all: gcov_report
+SOURCES = Model/*.cc  Model/*/*.cc 
+all: install
 
 clean:
-	rm -rf *.o *.gcno *.gcda *.info test.out
-	rm -rf ./report
-	rm -rf *.dSYM
-	rm -rf *.gch
+	rm -rf *.o
 	rm -rf test
-	rm -rf gcov_test
-	rm -rf gcov_report/
 
 rebuild: clean all
 
-test: clean
+tests: clean
 	$(CC) $(CFLAGS) $(GCOVFLAGS) $(SOURCES) unit_tests.cc -lgtest -pthread -o test 
 	 ./test
+test: tests
 
 memcheck: test
 ifeq ($(OS), Darwin)
@@ -28,12 +23,6 @@ ifeq ($(OS), Darwin)
 else
 	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./test
 endif
-
-gcov_report: clean test
-	$(LC) -t "gcov_report" --no-external -o report.info
-	genhtml -o gcov_report --prefix src report.info
-	rm -f *.gcno *.gcda *.info report.out *.gcov test
-	open ./gcov_report/index-sort-l.html
 
 check:
 	cp ../materials/linters/.clang-format ./
@@ -43,3 +32,21 @@ check:
 	clang-format -n ./*/*/*.h
 	rm -rf .clang-format
 
+install: uninstall
+	make clean
+	mkdir build
+	cd View && qmake && make && make clean && rm Makefile && cd ../ && mv View/Calc.app build
+
+uninstall:
+	rm -rf build*
+
+dist:
+	rm -rf Archive_SmartCalc_v2.0/
+	mkdir Archive_SmartCalc_v2.0/
+	mkdir Archive_SmartCalc_v2.0/src
+	mv ./build/Calc.app Archive_SmartCalc_v2.0/src/
+	tar cvzf Archive_SmartCalc_v2.0.tgz Archive_SmartCalc_v2.0/
+	rm -rf Archive_SmartCalc_v2.0/
+
+dvi:
+	open readme_calc.md

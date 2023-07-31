@@ -84,6 +84,10 @@
         "ranges": "cpp",
         "stop_token": "cpp",
         "thread": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "future": "cpp",
+        "list": "cpp",
+        "filesystem": "cpp",
+        "__functional_base_03": "cpp"
     }
 }

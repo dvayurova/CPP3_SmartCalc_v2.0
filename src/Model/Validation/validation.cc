@@ -3,24 +3,27 @@
 namespace s21 {
 
 bool Validation::IsValid(std::string &expression, std::string &x_value) {
-  expression_ = expression;
-  PrepareExpression();
-  ReplaceXToValue(x_value);
-  infix_ = expression_;
-  bool valid_expression_ = true;
-  for (size_t i = 0; i < infix_.GetLength() && valid_expression_; i++) {
+  PrepareExpression(expression);
+  infix_ = expression;
+  bool valid_expression = true;
+  if (expression.find("x") != std::string::npos) {
+    valid_expression = CheckXValue(x_value);
+  }
+  for (size_t i = 0; i < infix_.GetLength() && valid_expression; i++) {
     if (std::isdigit(infix_[i])) {
       infix_.GetNumber(i);
+    } else if (infix_[i] == 'x') {
+      infix_.GetX(x_value, valid_expression);
     } else if (infix_[i] == '(' || infix_[i] == ')') {
-      valid_expression_ = CheckBrackets(i);
+      valid_expression = CheckBrackets(i);
     } else if (!IsOperation(i)) {
-      valid_expression_ = false;
+      valid_expression = false;
     }
   }
   if (CheckExtraBrackets())
-    valid_expression_ = false;
+    valid_expression = false;
   expression = infix_.GetString();
-  return valid_expression_;
+  return valid_expression;
 }
 
 bool Validation::IsOperation(size_t &i) {
@@ -61,37 +64,49 @@ bool Validation::CheckExtraBrackets() {
   return false;
 }
 
-void Validation::PrepareExpression() {
-  std::transform(expression_.begin(), expression_.end(), expression_.begin(),
-                 ::tolower);
-  expression_.erase(remove(expression_.begin(), expression_.end(), ' '),
-                    expression_.end());
-  for (size_t i = 0; i < expression_.length(); i++) {
-    AddAsterisk(i);
-    AddZeroToUnarySign(i);
+void Validation::PrepareExpression(std::string &expression) {
+  for (size_t i = 0; i < expression.length(); i++) {
+    AddAsterisk(expression, i);
+    AddZeroToUnarySign(expression, i);
   }
 }
 
-void Validation::ReplaceXToValue(std::string &x_value) {
+bool Validation::CheckXValue(std::string &x_value) {
+  if (x_value.empty())
+    return false;
+  for (char c : x_value) {
+    if (!(isdigit(c) || c == '.' || c == '+' || c == '-'))
+      return false;
+  }
+  Infix tmp = x_value;
+  size_t i = 0;
+  tmp.GetNumber(i);
+  if (i != (x_value.length() - 1))
+    return false;
+  return true;
+}
+
+void Validation::ReplaceXToValue(std::string &expression,
+                                 std::string &x_value) {
   size_t pos;
-  while ((pos = expression_.find("x")) != std::string::npos) {
-    expression_.replace(pos, 1, x_value);
+  while ((pos = expression.find("x")) != std::string::npos) {
+    expression.replace(pos, 1, x_value);
   }
 }
 
-void Validation::AddAsterisk(size_t &i) {
-  if ((expression_[i] == '(' ||
-       (std::isalpha(expression_[i]) && expression_[i] != 'm')) &&
+void Validation::AddAsterisk(std::string &expression, size_t &i) {
+  if ((expression[i] == '(' ||
+       (std::isalpha(expression[i]) && expression[i] != 'm')) &&
       (i != 0 &&
-       (std::isdigit(expression_[i - 1]) || expression_[i - 1] == 'x'))) {
-    expression_.insert(i, 1, '*');
+       (std::isdigit(expression[i - 1]) || expression[i - 1] == 'x'))) {
+    expression.insert(i, 1, '*');
   }
 }
 
-void Validation::AddZeroToUnarySign(size_t &i) {
-  if ((expression_[i] == '-' || expression_[i] == '+') &&
-      (i == 0 || expression_[i - 1] == '(')) {
-    expression_.insert(i, 1, '0');
+void Validation::AddZeroToUnarySign(std::string &expression, size_t &i) {
+  if ((expression[i] == '-' || expression[i] == '+') &&
+      (i == 0 || expression[i - 1] == '(')) {
+    expression.insert(i, 1, '0');
   }
 }
 

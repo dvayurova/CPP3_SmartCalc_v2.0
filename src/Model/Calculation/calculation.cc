@@ -1,6 +1,26 @@
 #include "calculation.h"
+#include <cmath>
 
 namespace s21 {
+
+std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
+  double result = 0;
+  valid_expression_ = true;
+  std::stack<double> stack = {};
+  while (!postfix.empty() && valid_expression_) {
+    if (postfix.front().is_number_) {
+      stack.push(postfix.front().number_);
+    } else if (NeedTwoArguments(postfix.front().operation_)) {
+      stack.push(GetArithmeticResult(postfix, stack));
+    } else {
+      stack.push(GetFunctionResult(postfix, stack));
+    }
+    postfix.pop();
+  }
+  if (!stack.empty())
+    result = stack.top();
+  return std::pair<bool, double>(valid_expression_, result);
+}
 
 double Calculation::CalculateArithmetic(std::string operation, double first,
                                         double second) {
@@ -78,28 +98,6 @@ double Calculation::GetFunctionResult(std::queue<Lexeme> &postfix,
     result = std::log10(number);
   }
   return result;
-}
-
-std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
-  double result = 0;
-  valid_expression_ = true;
-  std::stack<double> stack = {};
-  while (!postfix.empty() && valid_expression_) {
-    if (postfix.front().is_number_) {
-      stack.push(postfix.front().number_);
-    } else if (NeedTwoArguments(postfix.front().operation_)) {
-      stack.push(GetArithmeticResult(postfix, stack));
-    } else {
-      stack.push(GetFunctionResult(postfix, stack));
-    }
-    postfix.pop();
-  }
-  if (!stack.empty())
-    result = stack.top();
-  if (std::isnan(result) || std::isinf(result)) {
-    valid_expression_ = false;
-  }
-  return std::pair<bool, double>(valid_expression_, result);
 }
 
 } // namespace s21

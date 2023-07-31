@@ -1,7 +1,6 @@
-#ifndef CPP3_SMARTCALC_V2_0_1_SRC_MODEL_INFIX_H_
-#define CPP3_SMARTCALC_V2_0_1_SRC_MODEL_INFIX_H_
+#ifndef CPP3_SMARTCALC_V2_MODEL_INFIX_H_
+#define CPP3_SMARTCALC_V2_MODEL_INFIX_H_
 
-#include <regex>
 #include <string>
 
 namespace s21 {
@@ -15,6 +14,8 @@ public:
   ~Infix() {}
 
   double GetNumber(size_t &index);
+  double GetX(std::string &number, bool &is_nimber);
+
   std::string GetFunction(size_t &index);
 
   size_t GetLength();
@@ -33,4 +34,4 @@ private:
 
 } // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_0_1_SRC_MODEL_INFIX_H_
+#endif //  CPP3_SMARTCALC_V2_MODEL_INFIX_H_
