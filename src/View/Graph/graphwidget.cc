@@ -1,4 +1,4 @@
-#include "graphwidget.h"
+#include "Graph/graphwidget.h"
 
 #include "ui_graphwidget.h"
 #include <math.h>

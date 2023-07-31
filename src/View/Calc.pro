@@ -10,7 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     ../main.cc \
-    graphwidget.cc \
+    Graph/graphwidget.cc \
     qcustomplot.cc \
     view.cc \
     ../Model/Calculation/calculation.cc \
@@ -20,7 +20,7 @@ SOURCES += \
     ../Model/Credit/credit_calc.cc
 
 HEADERS += \
-    graphwidget.h \
+    Graph/graphwidget.h \
     qcustomplot.h \
     view.h \
     ../Controller/controller.h \
@@ -32,7 +32,7 @@ HEADERS += \
     ../Model/Credit/credit_calc.h
 
 FORMS += \
-    graphwidget.ui \
+    Graph/graphwidget.ui \
     view.ui
 
 # Default rules for deployment.

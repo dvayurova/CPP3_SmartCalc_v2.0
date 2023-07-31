@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QVector>
-#include <graphwidget.h>
+#include <Graph/graphwidget.h>
 
 #include "../Controller/controller.h"
 

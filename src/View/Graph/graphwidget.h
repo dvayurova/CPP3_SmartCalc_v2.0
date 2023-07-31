@@ -1,7 +1,7 @@
 #ifndef CPP3_SMARTCALC_V2_VIEW_GRAPHWIDGET_H_
 #define CPP3_SMARTCALC_V2_VIEW_GRAPHWIDGET_H_
 
-#include "../Controller/controller.h"
+#include "../../Controller/controller.h"
 #include <QWidget>
 
 namespace Ui {
