@@ -27,8 +27,9 @@ endif
 check:
 	cp ../materials/linters/.clang-format ./
 	clang-format -n *.cc
-	clang-format -n *.h
-	clang-format -n ./*/*/*.tpp
+	clang-format -n ./*/*.cc
+	clang-format -n ./*/*.h
+	clang-format -n ./*/*/*.cc
 	clang-format -n ./*/*/*.h
 	rm -rf .clang-format
 

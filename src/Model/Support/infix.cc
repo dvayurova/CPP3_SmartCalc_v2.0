@@ -1,4 +1,5 @@
 #include "infix.h"
+
 #include <regex>
 
 namespace s21 {
@@ -49,4 +50,4 @@ std::string Infix::GetOperation(size_t &index) {
   return operation;
 }
 
-} // namespace s21
+}  // namespace s21

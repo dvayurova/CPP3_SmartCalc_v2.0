@@ -16,7 +16,8 @@ SOURCES += \
     ../Model/Calculation/calculation.cc \
     ../Model/Postfix/postfix.cc \
     ../Model/Validation/validation.cc \
-    ../Model/infix.cc \
+    ../Model/Support/infix.cc \
+    ../Model/model.cc \
     ../Model/Credit/credit_calc.cc
 
 HEADERS += \
@@ -27,8 +28,9 @@ HEADERS += \
     ../Model/Calculation/calculation.h \
     ../Model/Postfix/postfix.h \
     ../Model/Validation/validation.h \
-    ../Model/infix.h \
-    ../Model/lexeme.h \
+    ../Model/Support/infix.h \
+    ../Model/Support/lexeme.h \
+    ../Model/model.h \
     ../Model/Credit/credit_calc.h
 
 FORMS += \

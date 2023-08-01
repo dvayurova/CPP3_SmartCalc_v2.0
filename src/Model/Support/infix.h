@@ -1,12 +1,12 @@
-#ifndef CPP3_SMARTCALC_V2_MODEL_INFIX_H_
-#define CPP3_SMARTCALC_V2_MODEL_INFIX_H_
+#ifndef CPP3_SMARTCALC_V2_MODEL_SUPPORT_INFIX_H_
+#define CPP3_SMARTCALC_V2_MODEL_SUPPORT_INFIX_H_
 
 #include <string>
 
 namespace s21 {
 
 class Infix {
-public:
+ public:
   Infix() {}
   Infix(std::string str) : infix_(str) {}
   Infix(const Infix &other) { infix_ = other.infix_; }
@@ -28,10 +28,10 @@ public:
   std::string &GetString();
   std::string GetOperation(size_t &index);
 
-private:
+ private:
   std::string infix_;
 };
 
-} // namespace s21
+}  // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_MODEL_INFIX_H_
+#endif  //  CPP3_SMARTCALC_V2_MODEL_SUPPORT_INFIX_H_

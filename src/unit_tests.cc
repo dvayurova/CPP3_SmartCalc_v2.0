@@ -3,7 +3,6 @@
 #include <cmath>
 #include <string>
 
-#include "Model/Credit/credit_calc.h" // delete
 #include "Model/model.h"
 
 TEST(ModelTest, Case0) {
@@ -222,8 +221,9 @@ TEST(ModelTest, Case28) {
 }
 
 TEST(ModelTest, Case29) {
-  std::string expression = "tan(-85)*tan(15)+asin(0.8)-acos(1)/"
-                           "atan(0.5)+acos(-0.3)+asin(-0.7)*atan(-0.5)";
+  std::string expression =
+      "tan(-85)*tan(15)+asin(0.8)-acos(1)/"
+      "atan(0.5)+acos(-0.3)+asin(-0.7)*atan(-0.5)";
   std::string x_value = "";
   s21::CalculatorModel model;
   ASSERT_NEAR(3.31540708, model.GetResult(expression, x_value).second, 1e-6);
@@ -475,12 +475,23 @@ TEST(ModelTest, Case55) {
   ASSERT_DOUBLE_EQ(25, model.GetResult(expression, x_value).second);
 }
 
-TEST(ModelTest, CreditCalc1) {
-  s21::CreditCalc credit(150000, 7 * 12, 0.16, "annuity");
-  credit.CalcAnnuityPayment();
+TEST(ModelTest, CreditCalcAnnuity) {
+  s21::CreditCalc credit(150000, 7 * 12, 0.16);
+  s21::CalculatorModel model;
+  model.CalcAnnuityPayment(credit);
   ASSERT_NEAR(credit.GetMonthlyPayment(), 2979.31, 1e-1);
   ASSERT_NEAR(credit.GetOverpayment(), 100262.04, 1e-1);
   ASSERT_NEAR(credit.GetTotalPayment(), 250262.04, 1e-1);
+}
+
+TEST(ModelTest, CreditCalcDiffer) {
+  s21::CreditCalc credit(150000, 7 * 12, 0.16);
+  s21::CalculatorModel model;
+  model.CalcDifferPayment(credit);
+  ASSERT_NEAR(credit.GetFirstPayment(), 3785.71, 1e-1);
+  ASSERT_NEAR(credit.GetLastPayment(), 1809.52, 1e-1);
+  ASSERT_NEAR(credit.GetOverpayment(), 85000.00, 1e-1);
+  ASSERT_NEAR(credit.GetTotalPayment(), 235000.00, 1e-1);
 }
 
 int main(int argc, char **argv) {

@@ -16,7 +16,6 @@ public:
   double GetTotalPayment();
   double GetFirstPayment();
   double GetLastPayment();
-
   void CalcAnnuityPayment();
   void CalcDifferPayment();
 
@@ -26,7 +25,6 @@ private:
   double rate_;
   double monthly_payment_first_;
   double monthly_payment_last_;
-
   double monthly_payment_;
   double overpayment_;
   double total_payment_;

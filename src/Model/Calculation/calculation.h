@@ -1,18 +1,19 @@
 #ifndef CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
 #define CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
 
-#include "../Postfix/postfix.h"
 #include <queue>
 #include <stack>
+
+#include "../Postfix/postfix.h"
 
 namespace s21 {
 
 class Calculation {
-public:
+ public:
   Calculation() {}
   std::pair<bool, double> GetCalcResult(std::queue<Lexeme> postfix);
 
-private:
+ private:
   double CalculateArithmetic(std::string operation, double first,
                              double second);
   double GetArithmeticResult(std::queue<Lexeme> &postfix,
@@ -24,6 +25,6 @@ private:
   bool valid_expression_;
 };
 
-} // namespace s21
+}  // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_
+#endif  //  CPP3_SMARTCALC_V2_MODEL_CALCULATION_CALCULATION_H_

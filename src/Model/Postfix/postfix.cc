@@ -58,4 +58,4 @@ void PostfixExpression::ParseBrackets(size_t &i) {
   }
 }
 
-} // namespace s21
+}  // namespace s21

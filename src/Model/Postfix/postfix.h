@@ -1,19 +1,20 @@
 #ifndef CPP3_SMARTCALC_V2_MODEL_POSTFIX_POSTFIX_H_
 #define CPP3_SMARTCALC_V2_MODEL_POSTFIX_POSTFIX_H_
 
-#include "../Validation/validation.h"
 #include <queue>
 #include <stack>
+
+#include "../Validation/validation.h"
 
 namespace s21 {
 
 class PostfixExpression {
-public:
+ public:
   PostfixExpression() {}
   std::queue<Lexeme> ConvertToPostfix(std::string &expression,
                                       std::string &x_value);
 
-private:
+ private:
   std::queue<Lexeme> postfix_;
   Infix infix_;
   std::stack<Lexeme> stack_;
@@ -24,6 +25,6 @@ private:
   bool CheckOperationPriority(std::string &operation);
 };
 
-} // namespace s21
+}  // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_MODEL_POSTFIX_POSTFIX_H_
+#endif  //  CPP3_SMARTCALC_V2_MODEL_POSTFIX_POSTFIX_H_

@@ -1,9 +1,10 @@
 #ifndef CPP3_SMARTCALC_V2_VIEW_VIEW_H_
 #define CPP3_SMARTCALC_V2_VIEW_VIEW_H_
 
+#include <Graph/graphwidget.h>
+
 #include <QMainWindow>
 #include <QVector>
-#include <Graph/graphwidget.h>
 
 #include "../Controller/controller.h"
 
@@ -17,21 +18,21 @@ namespace s21 {
 class View : public QMainWindow {
   Q_OBJECT
 
-public:
+ public:
   View(Controller *c, QWidget *parent = nullptr);
   ~View();
 
-private:
+ private:
   Ui::View *ui;
   GraphWidget *graph;
   Controller *controller_;
   void SetDefaultValues();
 
-signals:
+ signals:
   void GraphSignal(double x_min, double x_max, double y_min, double y_max,
                    std::string expression);
 
-private slots:
+ private slots:
   void ButtonPressed();
   void ButtonEqualPressed();
   void ButtonDelPressed();
@@ -39,5 +40,5 @@ private slots:
   void GraphingButtonPressed();
   void CreditCalc();
 };
-} // namespace s21
-#endif // CPP3_SMARTCALC_V2_VIEW_VIEW_H_
+}  // namespace s21
+#endif  // CPP3_SMARTCALC_V2_VIEW_VIEW_H_

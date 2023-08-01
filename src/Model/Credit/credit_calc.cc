@@ -1,4 +1,5 @@
 #include "credit_calc.h"
+
 #include <cmath>
 
 namespace s21 {
@@ -33,4 +34,4 @@ double CreditCalc::GetTotalPayment() { return total_payment_; }
 double CreditCalc::GetFirstPayment() { return monthly_payment_first_; }
 double CreditCalc::GetLastPayment() { return monthly_payment_last_; }
 
-} // namespace s21
+}  // namespace s21

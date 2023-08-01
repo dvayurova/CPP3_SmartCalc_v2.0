@@ -20,8 +20,7 @@ bool Validation::IsValid(std::string &expression, std::string &x_value) {
       valid_expression = false;
     }
   }
-  if (CheckExtraBrackets())
-    valid_expression = false;
+  if (CheckExtraBrackets()) valid_expression = false;
   expression = infix_.GetString();
   return valid_expression;
 }
@@ -57,8 +56,7 @@ bool Validation::CheckBrackets(size_t &i) {
 
 bool Validation::CheckExtraBrackets() {
   while (!stack_.empty()) {
-    if (stack_.top().operation_ == "(")
-      return true;
+    if (stack_.top().operation_ == "(") return true;
     stack_.pop();
   }
   return false;
@@ -72,17 +70,14 @@ void Validation::PrepareExpression(std::string &expression) {
 }
 
 bool Validation::CheckXValue(std::string &x_value) {
-  if (x_value.empty())
-    return false;
+  if (x_value.empty()) return false;
   for (char c : x_value) {
-    if (!(isdigit(c) || c == '.' || c == '+' || c == '-'))
-      return false;
+    if (!(isdigit(c) || c == '.' || c == '+' || c == '-')) return false;
   }
   Infix tmp = x_value;
   size_t i = 0;
   tmp.GetNumber(i);
-  if (i != (x_value.length() - 1))
-    return false;
+  if (i != (x_value.length() - 1)) return false;
   return true;
 }
 
@@ -110,4 +105,4 @@ void Validation::AddZeroToUnarySign(std::string &expression, size_t &i) {
   }
 }
 
-} // namespace s21
+}  // namespace s21

@@ -9,13 +9,13 @@ namespace s21 {
 enum Priority { DEFAULT, LOW, MEDIUM, MOD = 2, HIGH, FUNCTION };
 
 class Lexeme {
-public:
+ public:
   Lexeme() {}
   Lexeme(double number) : is_number_(true), number_(number), operation_(""){};
   Lexeme(std::string operation)
       : is_number_(false), number_(0), operation_(operation){};
 
-private:
+ private:
   bool is_number_;
   double number_;
   std::string operation_;
@@ -32,6 +32,6 @@ private:
   friend class Validation;
 };
 
-} // namespace s21
+}  // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_MODEL_LEXEME_H_
+#endif  //  CPP3_SMARTCALC_V2_MODEL_LEXEME_H_

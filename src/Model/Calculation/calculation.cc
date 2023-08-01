@@ -1,4 +1,5 @@
 #include "calculation.h"
+
 #include <cmath>
 
 namespace s21 {
@@ -17,8 +18,7 @@ std::pair<bool, double> Calculation::GetCalcResult(std::queue<Lexeme> postfix) {
     }
     postfix.pop();
   }
-  if (!stack.empty())
-    result = stack.top();
+  if (!stack.empty()) result = stack.top();
   return std::pair<bool, double>(valid_expression_, result);
 }
 
@@ -100,4 +100,4 @@ double Calculation::GetFunctionResult(std::queue<Lexeme> &postfix,
   return result;
 }
 
-} // namespace s21
+}  // namespace s21

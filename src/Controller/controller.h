@@ -6,7 +6,7 @@
 namespace s21 {
 
 class Controller {
-public:
+ public:
   Controller(CalculatorModel *model) : model_(model) {}
 
   std::pair<bool, double> GetMainCalcResult(std::string expression,
@@ -16,8 +16,8 @@ public:
     return res;
   }
 
-  std::pair<std::vector<double>, std::vector<double>>
-  GetCoordinates(double x_min, double x_max, std::string &expression) {
+  std::pair<std::vector<double>, std::vector<double>> GetCoordinates(
+      double x_min, double x_max, std::string &expression) {
     return model_->GetCoordinates(x_min, x_max, expression);
   }
 
@@ -29,9 +29,9 @@ public:
     model_->CalcDifferPayment(credit);
   }
 
-private:
+ private:
   CalculatorModel *model_;
 };
 
-} // namespace s21
-#endif // CPP3_SMARTCALC_V2_CONTROLLER_CONTROLLER_H_
+}  // namespace s21
+#endif  // CPP3_SMARTCALC_V2_CONTROLLER_CONTROLLER_H_

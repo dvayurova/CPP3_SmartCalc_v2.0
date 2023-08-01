@@ -1,4 +1,5 @@
 #include "view.h"
+
 #include "ui_view.h"
 
 namespace s21 {
@@ -148,4 +149,4 @@ void View::SetDefaultValues() {
   ui->expression->setReadOnly(true);
 }
 
-} // namespace s21
+}  // namespace s21

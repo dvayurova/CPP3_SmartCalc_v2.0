@@ -3,17 +3,17 @@
 
 #include <stack>
 
-#include "../infix.h"
-#include "../lexeme.h"
+#include "../Support/infix.h"
+#include "../Support/lexeme.h"
 
 namespace s21 {
 
 class Validation {
-public:
+ public:
   Validation() {}
   bool IsValid(std::string &expression, std::string &x_value);
 
-private:
+ private:
   Infix infix_;
   std::stack<Lexeme> stack_;
   void PrepareExpression(std::string &expression);
@@ -26,6 +26,6 @@ private:
   bool CheckXValue(std::string &x_value);
 };
 
-} // namespace s21
+}  // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_MODEL_VALIDATION_VALIDATION_H_
+#endif  //  CPP3_SMARTCALC_V2_MODEL_VALIDATION_VALIDATION_H_

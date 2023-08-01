@@ -1,7 +1,8 @@
 #include "Graph/graphwidget.h"
 
-#include "ui_graphwidget.h"
 #include <math.h>
+
+#include "ui_graphwidget.h"
 
 namespace s21 {
 GraphWidget::GraphWidget(Controller *controller, QWidget *parent)
@@ -11,7 +12,6 @@ GraphWidget::GraphWidget(Controller *controller, QWidget *parent)
 
 void GraphWidget::GraphSlot(double x_min, double x_max, double y_min,
                             double y_max, std::string expression) {
-
   ui->widget->clearGraphs();
   ui->widget->xAxis->setRange(x_min, x_max);
   ui->widget->yAxis->setRange(y_min, y_max);
@@ -29,4 +29,4 @@ void GraphWidget::GraphSlot(double x_min, double x_max, double y_min,
 }
 
 GraphWidget::~GraphWidget() { delete ui; }
-} // namespace s21
+}  // namespace s21
