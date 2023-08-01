@@ -1,7 +1,6 @@
 .PHONY: all install uninstall clean dvi dist tests check memcheck test
 CC = g++
 CFLAGS = -Wall -Werror -Wextra -std=c++17
-LC = lcov -c -d .
 OS = $(shell uname -s)
 SOURCES = Model/*.cc  Model/*/*.cc 
 all: install
