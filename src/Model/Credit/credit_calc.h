@@ -6,10 +6,15 @@
 namespace s21 {
 
 class CreditCalc {
-public:
+ public:
   CreditCalc(double amount, int term, double rate)
-      : amount_(amount), term_(term), rate_(rate), monthly_payment_first_(0),
-        monthly_payment_last_(0), monthly_payment_(0), overpayment_(0),
+      : amount_(amount),
+        term_(term),
+        rate_(rate),
+        monthly_payment_first_(0),
+        monthly_payment_last_(0),
+        monthly_payment_(0),
+        overpayment_(0),
         total_payment_(0) {}
   double GetMonthlyPayment();
   double GetOverpayment();
@@ -19,7 +24,7 @@ public:
   void CalcAnnuityPayment();
   void CalcDifferPayment();
 
-private:
+ private:
   double amount_;
   int term_;
   double rate_;
@@ -30,6 +35,6 @@ private:
   double total_payment_;
 };
 
-} // namespace s21
+}  // namespace s21
 
-#endif //  CPP3_SMARTCALC_V2_MODEL_CREDIT_CREDIT_CALC_H_
+#endif  //  CPP3_SMARTCALC_V2_MODEL_CREDIT_CREDIT_CALC_H_

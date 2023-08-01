@@ -3,8 +3,8 @@
 
 #include <stack>
 
-#include "../Support/infix.h"
-#include "../Support/lexeme.h"
+#include "../infix.h"
+#include "../lexeme.h"
 
 namespace s21 {
 
